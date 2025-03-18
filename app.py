@@ -71,16 +71,11 @@ elif page == "Dataset":
 # EDA Portal
 elif page == "EDA":
     st.title("Exploratory Data Analysis")
-    st.subheader("Fuel Consumption Analysis")
-    fig, ax = plt.subplots()
-    sns.lineplot(x=df["Date"], y=df["Fuel_Consumption"], ax=ax)
-    st.pyplot(fig)
+    st.write("Below are key insights from our Power BI analysis.")
     
-    st.subheader("Occupancy Rate Distribution")
-    df['Utilization_Rate'] = (df['Seats_Booked'] / df['Total_Seats_Available']) * 100
-    fig, ax = plt.subplots()
-    sns.histplot(df["Utilization_Rate"], bins=20, ax=ax)
-    st.pyplot(fig)
+    st.image("fuel_efficiency_chart.png", caption="Fuel Consumption Analysis")
+    st.image("occupancy_trends.png", caption="Passenger Occupancy Trends")
+
 
 # Demand Forecasting Portal
 if page == "Demand Forecasting":
