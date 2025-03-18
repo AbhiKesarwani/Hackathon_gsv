@@ -1,71 +1,70 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+import os
 
-# Load dataset with caching to improve performance
-@st.cache_data
-def load_data():
-    df = pd.read_csv("dataset_updated.csv")  # Ensure the correct file is used
-    df.columns = df.columns.str.strip()  # Remove extra spaces from column names
-    return df
-
-df = load_data()
-
-# Debugging: Print column names to ensure "Route" exists
-st.write("Columns in Dataset:", df.columns)
-
-# Ensure "Route" column exists
-if "Route" in df.columns:
-    selected_route = st.sidebar.selectbox("Select Route", df["Route"].unique())
+# Load dataset
+DATA_PATH = "data.csv"
+if os.path.exists(DATA_PATH):
+    df = pd.read_csv(DATA_PATH)
 else:
-    st.sidebar.error("Column 'Route' not found in dataset")
+    st.error("Dataset not found!")
 
-# Filter data based on selected route
-filtered_df = df[df["Route"] == selected_route]
+# Sidebar Navigation
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "Dataset", "EDA", "Demand Forecasting", "Upload Data"])
 
-# KPI Cards
-st.subheader(f"📊 Key Metrics for {selected_route}")
+# Home Page
+if page == "Home":
+    st.title("GSRTC Data-Driven Insights Dashboard")
+    st.write("""
+    This platform helps analyze GSRTC operational data, optimize resource allocation, and predict passenger demand.
+    """)
 
-col1, col2, col3 = st.columns(3)
+# Dataset Page
+elif page == "Dataset":
+    st.title("Dataset Overview")
+    st.write(df.head())
+    st.download_button("Download Dataset", df.to_csv(index=False), "dataset.csv", "text/csv")
 
-with col1:
-    st.metric(label="Average Fuel Consumption", value=f"{filtered_df['Fuel_Consumption'].mean():.2f} Liters")
-
-with col2:
-    st.metric(label="Average Delay", value=f"{filtered_df['Delay_Minutes'].mean():.2f} min")
-
-with col3:
-    st.metric(label="Revenue per Trip", value=f"₹{(filtered_df['Ticket_Price'] * filtered_df['Seats_Booked']).mean():.2f}")
-
-# Visualization: Fuel Consumption Trend
-st.subheader("⛽ Fuel Consumption Over Time")
-if "Date" in df.columns:
-    fig_fuel = px.line(filtered_df, x="Date", y="Fuel_Consumption", title="Fuel Consumption Trend")
-    st.plotly_chart(fig_fuel)
-else:
-    st.warning("Date column not found in dataset. Cannot plot fuel trend.")
-
-# Visualization: Ticket Price Distribution
-st.subheader("💰 Ticket Price Distribution")
-fig_price = px.histogram(filtered_df, x="Ticket_Price", title="Distribution of Ticket Prices", nbins=20)
-st.plotly_chart(fig_price)
-
-# Visualization: Delay Analysis
-st.subheader("⏳ Average Delay by Route")
-fig_delay = px.bar(df, x="Route", y="Delay_Minutes", title="Average Delay per Route", color="Delay_Minutes")
-st.plotly_chart(fig_delay)
-
-# Utilization Rate Calculation
-if "Seats_Booked" in df.columns and "Total_Seats_Available" in df.columns:
-    df["Utilization_Rate"] = (df["Seats_Booked"] / df["Total_Seats_Available"]) * 100
-    df["Occupancy_Category"] = df["Utilization_Rate"].apply(lambda x: "Low" if x < 40 else "Moderate" if x < 70 else "High")
+# EDA Portal
+elif page == "EDA":
+    st.title("Exploratory Data Analysis")
+    st.subheader("Fuel Consumption Analysis")
+    fig, ax = plt.subplots()
+    sns.lineplot(x=df["Date"], y=df["Fuel_Consumption"], ax=ax)
+    st.pyplot(fig)
     
-    # Donut Chart: Bus Occupancy
-    st.subheader("🚍 Bus Utilization Category")
-    fig_occupancy = px.pie(df, names="Occupancy_Category", title="Occupancy Levels", hole=0.4)
-    st.plotly_chart(fig_occupancy)
-else:
-    st.warning("Seats_Booked or Total_Seats_Available columns missing.")
+    st.subheader("Occupancy Rate Distribution")
+    df['Utilization_Rate'] = (df['Seats_Booked'] / df['Total_Seats_Available']) * 100
+    fig, ax = plt.subplots()
+    sns.histplot(df["Utilization_Rate"], bins=20, ax=ax)
+    st.pyplot(fig)
 
-# Footer
-st.markdown("📌 **GSRTC Data Analysis Dashboard** - Powered by Streamlit & Plotly")
+# Demand Forecasting Portal
+elif page == "Demand Forecasting":
+    st.title("Passenger Demand Forecasting")
+    st.write("Forecasting future passenger demand using SARIMA model.")
+    df['Date'] = pd.to_datetime(df['Date'])
+    df.set_index('Date', inplace=True)
+    
+    # Train SARIMA Model
+    model = SARIMAX(df['Seats_Booked'], order=(1, 1, 1), seasonal_order=(1, 1, 1, 12))
+    results = model.fit()
+    forecast = results.forecast(steps=30)
+    
+    st.line_chart(forecast)
+
+# Data Upload Portal
+elif page == "Upload Data":
+    st.title("Upload New Data")
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    if uploaded_file is not None:
+        new_data = pd.read_csv(uploaded_file)
+        if set(new_data.columns) == set(df.columns):
+            new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
+            st.success("Data successfully uploaded and merged!")
+        else:
+            st.error("Column mismatch! Ensure the uploaded file has the same structure as the dataset.")
