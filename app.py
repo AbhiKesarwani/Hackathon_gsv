@@ -6,9 +6,9 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 import os
 
 # Load dataset
-DATA_PATH = "data.csv"
-if os.path.exists(dataset_updated):
-    df = pd.read_csv(dataset_updated)
+DATA_PATH = "dataset_updated.csv"
+if os.path.exists("dataset_updated.csv"):
+    df = pd.read_csv("dataset_updated.csv")
 else:
     st.error("Dataset not found!")
 
