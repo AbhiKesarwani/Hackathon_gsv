@@ -75,9 +75,6 @@ elif page == "EDA":
     st.image("total_trips_by_occupancy.png", caption="🚌 Total Trips by Occupancy")
 
 # Demand Forecasting Portal
-from statsmodels.tsa.holtwinters import ExponentialSmoothing
-
-# Demand Forecasting Portal
 elif page == "Demand Forecasting":
     st.title("📊 Passenger Demand Forecasting (Optimized)")
     st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
