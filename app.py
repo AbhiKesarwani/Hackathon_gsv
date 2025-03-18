@@ -75,7 +75,9 @@ elif page == "EDA":
     st.image("total_trips_by_occupancy.png", caption="🚌 Total Trips by Occupancy")
 
 # Demand Forecasting Portal
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
+# Demand Forecasting Portal
 elif page == "Demand Forecasting":
     st.title("📊 Passenger Demand Forecasting (Optimized)")
     st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
@@ -83,51 +85,63 @@ elif page == "Demand Forecasting":
     # Preprocessing: Aggregate by Date
     df_daily = df.groupby('Date').agg({'Seats_Booked': 'sum'}).reset_index().sort_values(by='Date')
 
-    # Train-Test Split
-    train_size = int(len(df_daily) * 0.8)
-    train, test = df_daily[:train_size], df_daily[train_size:]
+    # **Fix Missing or Invalid Values**
+    df_daily['Seats_Booked'] = pd.to_numeric(df_daily['Seats_Booked'], errors='coerce')  # Ensure numeric
+    df_daily = df_daily.dropna(subset=['Seats_Booked'])  # Drop rows with NaN
 
-    # Fit Exponential Smoothing Model (Lightweight)
-    model = ExponentialSmoothing(train['Seats_Booked'], trend="add", seasonal="add", seasonal_periods=7)
-    model_fit = model.fit()
+    # **Ensure Sufficient Data**
+    if len(df_daily) < 10:  # Check if dataset has enough points
+        st.error("Not enough data points for forecasting. Please upload more historical data.")
+    else:
+        # Train-Test Split
+        train_size = int(len(df_daily) * 0.8)
+        train, test = df_daily[:train_size], df_daily[train_size:]
 
-    # Forecast Test Data
-    test_forecast = model_fit.forecast(len(test))
+        # **Fit Exponential Smoothing Model**
+        try:
+            model = ExponentialSmoothing(train['Seats_Booked'], trend="add", seasonal="add", seasonal_periods=7)
+            model_fit = model.fit()
+        except ValueError as e:
+            st.error(f"Model Training Error: {e}")
+            st.stop()
 
-    # Evaluate Model Performance
-    rmse = np.sqrt(mean_squared_error(test['Seats_Booked'], test_forecast))
-    st.write(f"📊 **Model RMSE:** {rmse:.2f} (Lower is better)")
+        # **Forecast Test Data**
+        test_forecast = model_fit.forecast(len(test))
 
-    # User Input for Future Forecasting
-    future_steps = st.slider("📅 Select Forecast Duration (Days)", min_value=7, max_value=90, value=30)
+        # **Evaluate Model Performance**
+        rmse = np.sqrt(mean_squared_error(test['Seats_Booked'], test_forecast))
+        st.write(f"📊 **Model RMSE:** {rmse:.2f} (Lower is better)")
 
-    # Future Demand Forecast
-    future_forecast = model_fit.forecast(future_steps)
+        # **User Input for Future Forecasting**
+        future_steps = st.slider("📅 Select Forecast Duration (Days)", min_value=7, max_value=90, value=30)
 
-    # Create Future Dates
-    future_dates = pd.date_range(start=df_daily['Date'].iloc[-1] + pd.Timedelta(days=1), periods=future_steps)
+        # **Future Demand Forecast**
+        future_forecast = model_fit.forecast(future_steps)
 
-    # Visualization
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(df_daily['Date'], df_daily['Seats_Booked'], label="Actual Data", color="blue")
-    ax.plot(df_daily['Date'][len(train):], test_forecast, label="Test Forecast", linestyle="dashed", color="green")
-    ax.plot(future_dates, future_forecast, label=f"Next {future_steps} Days Forecast", linestyle="dashed", color="red")
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Seats Booked")
-    ax.set_title("📈 Exponential Smoothing - Demand Forecasting")
-    ax.legend()
-    ax.grid()
-    
-    st.pyplot(fig)
+        # **Create Future Dates**
+        future_dates = pd.date_range(start=df_daily['Date'].iloc[-1] + pd.Timedelta(days=1), periods=future_steps)
 
-    # Display Insights
-    st.subheader("🔎 Key Insights")
-    peak_demand = future_forecast.max()
-    low_demand = future_forecast.min()
-    
-    st.write(f"✔️ **Highest Predicted Demand:** {peak_demand:.0f} seats")
-    st.write(f"⚠️ **Lowest Predicted Demand:** {low_demand:.0f} seats")
-    st.write("🚀 **Business Impact:** Helps optimize fleet allocation, fuel efficiency, and revenue planning.")
+        # **Visualization**
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.plot(df_daily['Date'], df_daily['Seats_Booked'], label="Actual Data", color="blue")
+        ax.plot(df_daily['Date'][len(train):], test_forecast, label="Test Forecast", linestyle="dashed", color="green")
+        ax.plot(future_dates, future_forecast, label=f"Next {future_steps} Days Forecast", linestyle="dashed", color="red")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Seats Booked")
+        ax.set_title("📈 Exponential Smoothing - Demand Forecasting")
+        ax.legend()
+        ax.grid()
+
+        st.pyplot(fig)
+
+        # **Display Insights**
+        st.subheader("🔎 Key Insights")
+        peak_demand = future_forecast.max()
+        low_demand = future_forecast.min()
+
+        st.write(f"✔️ **Highest Predicted Demand:** {peak_demand:.0f} seats")
+        st.write(f"⚠️ **Lowest Predicted Demand:** {low_demand:.0f} seats")
+        st.write("🚀 **Business Impact:** Helps optimize fleet allocation, fuel efficiency, and revenue planning.")
 
 # Data Upload Portal
 elif page == "Upload Data":
