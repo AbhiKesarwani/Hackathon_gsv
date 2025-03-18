@@ -20,7 +20,20 @@ page = st.sidebar.radio("Go to", ["Home", "Dataset", "EDA", "Demand Forecasting"
 if page == "Home":
     st.title("GSRTC Data-Driven Insights Dashboard")
     st.write("""
-    This platform helps analyze GSRTC operational data, optimize resource allocation, and predict passenger demand.
+    ## Problem Statement
+    GSRTC currently operates with fragmented data across multiple departments, leading to inefficiencies in decision-making, inaccurate demand forecasting, and suboptimal resource utilization.
+    
+    ## Challenges
+    - Lack of a centralized data platform
+    - Inefficient scheduling and resource allocation
+    - Difficulty in predicting passenger demand
+    - High operational costs due to fuel inefficiencies
+    
+    ## Expected Outcomes
+    - A unified data platform integrating multiple data sources
+    - Improved decision-making with real-time insights
+    - Accurate demand forecasting to optimize scheduling
+    - Enhanced customer satisfaction with better service planning
     """)
 
 # Dataset Page
