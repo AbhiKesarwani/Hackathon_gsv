@@ -72,7 +72,7 @@ elif page == "EDA":
     st.image("seats_booked_by_destination.png", caption="🛋️ Seats Booked by Destination")
     st.image("seats_booked_per_month.png", caption="📆 Seats Booked Per Month")
     st.image("total_trips_by_delay_status.png", caption="⏳ Total Trips by Delay Status")
-    st.image("total_trips_by_delay_occupancy.png", caption="🚌 Total Trips by Delay & Occupancy")
+    st.image("total_trips_by_occupancy.png", caption="🚌 Total Trips by Occupancy")
 
 # Demand Forecasting Portal
 
