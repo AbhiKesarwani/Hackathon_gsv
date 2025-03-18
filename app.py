@@ -98,86 +98,19 @@ Event_Type - Type of event affecting the trip (Festival, Holiday, etc.).
 elif page == "EDA":
     st.title("Exploratory Data Analysis")
     st.write("Below are key insights from our Power BI analysis.")
+
+    st.image("gsrtc_dashboard.png", caption="gsrtc_dashboard.png")
+    st.image("avg_fuel_consumption.png", caption="avg_fuel_consumption.png")
+    st.image("avg_profit_per_trip_by_route.png", caption="avg_profit_per_trip_by_route.png")
+    st.image("seats_booked_by_destination.png", caption="seats_booked_by_destination.png")
+    st.image("seats_booked_per_month.png", caption="seats_booked_per_month.png")
+    st.image("total_trips_by_delay_status.png", caption="total_trips_by_delay_status.png")
+    st.image("total_trips_by_delay_occupancy.png", caption="total_trips_by_delay_occupancy.png")
     
-    st.image("fuel_efficiency_chart.png", caption="Fuel Consumption Analysis")
-    st.image("occupancy_trends.png", caption="Passenger Occupancy Trends")
 
 
 # Demand Forecasting Portal
-if page == "Demand Forecasting":
-    st.title("📊 Passenger Demand Forecasting")
-    st.write("Using SARIMA model to predict future passenger demand.")
 
-    # Data Preprocessing
-    df = df.drop(columns=["Unnamed: 0"], errors='ignore')
-    df_daily = df.groupby('Date').agg({'Seats_Booked': 'sum'}).reset_index()
-    df_daily = df_daily.sort_values(by='Date')
-
-    # ADF Test for Stationarity
-    def adf_test(series):
-        result = adfuller(series)
-        return result[1]  # Return p-value
-
-    # Check Stationarity
-    p_value = adf_test(df_daily["Seats_Booked"])
-    if p_value > 0.05:
-        df_daily["Seats_Booked_Diff"] = df_daily["Seats_Booked"].diff().dropna()
-        st.write("❌ Data is NOT stationary. Applied differencing.")
-    else:
-        st.write("✅ Data is stationary. No differencing applied.")
-
-    # Train-Test Split
-    train_size = int(len(df_daily) * 0.8)
-    train, test = df_daily[:train_size], df_daily[train_size:]
-
-    # Train SARIMA Model
-    sarima_model = SARIMAX(train['Seats_Booked'], 
-                            order=(1, 1, 1),  
-                            seasonal_order=(1, 1, 1, 60),  
-                            enforce_stationarity=False, 
-                            enforce_invertibility=False)
-
-    sarima_result = sarima_model.fit()
-
-    # Forecast for Test Data
-    test_forecast = sarima_result.get_forecast(steps=len(test))
-    test_forecast_mean = test_forecast.predicted_mean
-
-    # Model Evaluation
-    rmse = np.sqrt(mean_squared_error(test['Seats_Booked'], test_forecast_mean))
-    st.write(f"📊 **SARIMA Model RMSE:** {rmse:.2f}")
-
-    # User Input for Future Forecasting
-    future_steps = st.slider("Select Future Forecast Duration (Days)", min_value=7, max_value=90, value=30)
-    
-    # Forecast Future Demand
-    sarima_forecast_next = sarima_result.forecast(steps=future_steps)
-
-    # Create Future Dates
-    future_dates = pd.date_range(start=df_daily['Date'].iloc[-1] + pd.Timedelta(days=1), periods=future_steps)
-
-    # Visualization
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(df_daily['Date'], df_daily['Seats_Booked'], label="Actual Data", color="blue")
-    ax.plot(df_daily['Date'][:len(train)], sarima_result.fittedvalues, label="Fitted Values", linestyle="dotted", color="orange")
-    ax.plot(df_daily['Date'][len(train):], test_forecast_mean, label="Test Forecast", linestyle="dashed", color="green")
-    ax.plot(future_dates, sarima_forecast_next, label=f"Next {future_steps} Days Forecast", linestyle="dashed", color="red")
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Seats Booked")
-    ax.set_title("📈 SARIMA Model - Demand Forecasting")
-    ax.legend()
-    ax.grid()
-    
-    st.pyplot(fig)
-
-    # Display Insights
-    st.subheader("🔎 Key Insights")
-    peak_demand = sarima_forecast_next.max()
-    low_demand = sarima_forecast_next.min()
-    
-    st.write(f"✔️ **Highest Predicted Demand:** {peak_demand:.0f} seats")
-    st.write(f"⚠️ **Lowest Predicted Demand:** {low_demand:.0f} seats")
-    st.write("🚀 **Business Impact:** This forecast helps in optimizing fleet allocation, fuel efficiency, and revenue planning.")
 
 # Data Upload Portal
 elif page == "Upload Data":
