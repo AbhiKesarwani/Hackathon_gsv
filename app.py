@@ -37,9 +37,31 @@ if page == "Home":
     """)
 
 # Dataset Page
+# Dataset Page
 elif page == "Dataset":
     st.title("Dataset Overview")
-    st.write(df.head())
+    st.write("""
+    ### About the Dataset
+    - This dataset is **synthetically generated** to simulate real-world GSRTC operations.
+    - It includes details about bus trips, fuel consumption, occupancy rates, delays, ticket prices, and more.
+    - The dataset is structured to support insights into **resource allocation, demand forecasting, and operational efficiency**.
+    
+    ### Columns in the Dataset:
+    - **Date**: The date of the trip  
+    - **Route**: The route name (e.g., "Ahmedabad-Vadodara")  
+    - **Initial_Point** & **Final_Point**: Departure and arrival locations  
+    - **Bus_Type**: Type of bus (AC/Non-AC)  
+    - **Seats_Booked**: Number of seats booked for the trip  
+    - **Total_Seats_Available**: Maximum seating capacity  
+    - **Fuel_Consumption**: Fuel used per trip (in liters)  
+    - **Delay_Minutes**: Delay in minutes for the trip  
+    - **Ticket_Price**: Cost of a single ticket  
+    - **Distance**: Distance covered by the bus (in km)  
+
+    **You can scroll through the dataset below:**
+    """)
+
+    st.dataframe(df, height=400, width=1000)  # Enables scrolling in both directions
     st.download_button("Download Dataset", df.to_csv(index=False), "dataset.csv", "text/csv")
 
 # EDA Portal
