@@ -42,7 +42,6 @@ if page == "Home":
     """)
 
 # Dataset Page
-# Dataset Page
 elif page == "Dataset":
     st.title("Dataset Overview")
     st.write("""
@@ -86,6 +85,7 @@ elif page == "EDA":
 # Demand Forecasting Portal
 if page == "Demand Forecasting":
     st.title("📊 Passenger Demand Forecasting")
+    st.write("Using SARIMA model to predict future passenger demand.")
 
     # Data Preprocessing
     df = df.drop(columns=["Unnamed: 0"], errors='ignore')
@@ -99,9 +99,6 @@ if page == "Demand Forecasting":
 
     # Check Stationarity
     p_value = adf_test(df_daily["Seats_Booked"])
-    st.write(f"🔍 **ADF Test p-value:** {p_value:.5f}")
-    
-    # If Not Stationary, Apply Differencing
     if p_value > 0.05:
         df_daily["Seats_Booked_Diff"] = df_daily["Seats_Booked"].diff().dropna()
         st.write("❌ Data is NOT stationary. Applied differencing.")
@@ -129,26 +126,37 @@ if page == "Demand Forecasting":
     rmse = np.sqrt(mean_squared_error(test['Seats_Booked'], test_forecast_mean))
     st.write(f"📊 **SARIMA Model RMSE:** {rmse:.2f}")
 
-    # Forecast Future Demand for Next 30 Days
-    future_steps = 30
-    sarima_forecast_next_month = sarima_result.forecast(steps=future_steps)
+    # User Input for Future Forecasting
+    future_steps = st.slider("Select Future Forecast Duration (Days)", min_value=7, max_value=90, value=30)
+    
+    # Forecast Future Demand
+    sarima_forecast_next = sarima_result.forecast(steps=future_steps)
 
     # Create Future Dates
     future_dates = pd.date_range(start=df_daily['Date'].iloc[-1] + pd.Timedelta(days=1), periods=future_steps)
 
-    # Plot Demand Forecasting
+    # Visualization
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(df_daily['Date'], df_daily['Seats_Booked'], label="Actual Data", color="blue")
     ax.plot(df_daily['Date'][:len(train)], sarima_result.fittedvalues, label="Fitted Values", linestyle="dotted", color="orange")
     ax.plot(df_daily['Date'][len(train):], test_forecast_mean, label="Test Forecast", linestyle="dashed", color="green")
-    ax.plot(future_dates, sarima_forecast_next_month, label="Next 30 Days Forecast", linestyle="dashed", color="red")
+    ax.plot(future_dates, sarima_forecast_next, label=f"Next {future_steps} Days Forecast", linestyle="dashed", color="red")
     ax.set_xlabel("Date")
     ax.set_ylabel("Seats Booked")
-    ax.set_title("SARIMA Model - Demand Forecasting")
+    ax.set_title("📈 SARIMA Model - Demand Forecasting")
     ax.legend()
     ax.grid()
     
     st.pyplot(fig)
+
+    # Display Insights
+    st.subheader("🔎 Key Insights")
+    peak_demand = sarima_forecast_next.max()
+    low_demand = sarima_forecast_next.min()
+    
+    st.write(f"✔️ **Highest Predicted Demand:** {peak_demand:.0f} seats")
+    st.write(f"⚠️ **Lowest Predicted Demand:** {low_demand:.0f} seats")
+    st.write("🚀 **Business Impact:** This forecast helps in optimizing fleet allocation, fuel efficiency, and revenue planning.")
 
 # Data Upload Portal
 elif page == "Upload Data":
