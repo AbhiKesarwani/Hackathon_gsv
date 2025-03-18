@@ -51,16 +51,42 @@ elif page == "Dataset":
     - The dataset is structured to support insights into **resource allocation, demand forecasting, and operational efficiency**.
     
     ### Columns in the Dataset:
-    - **Date**: The date of the trip  
-    - **Route**: The route name (e.g., "Ahmedabad-Vadodara")  
-    - **Initial_Point** & **Final_Point**: Departure and arrival locations  
-    - **Bus_Type**: Type of bus (AC/Non-AC)  
-    - **Seats_Booked**: Number of seats booked for the trip  
-    - **Total_Seats_Available**: Maximum seating capacity  
-    - **Fuel_Consumption**: Fuel used per trip (in liters)  
-    - **Delay_Minutes**: Delay in minutes for the trip  
-    - **Ticket_Price**: Cost of a single ticket  
-    - **Distance**: Distance covered by the bus (in km)  
+    Date - Date of the trip.
+Day_of_Week - Day corresponding to the trip's date.
+Time_Slot - Time period of the journey (Morning, Afternoon, Night).
+Route_ID - Unique identifier for the bus route.
+Route_Name - Name of the route (start to end location).
+Bus_ID - Unique identifier for the bus.
+Driver_ID - Unique identifier for the driver.
+Bus_Type - Type of bus (AC, Non-AC, Sleeper, etc.).
+Total_Seats - Number of seats available in the bus.
+Seats_Booked - Number of seats booked for the trip.
+Occupancy_Rate (%) - Percentage of seats occupied.
+Ticket_Price - Price per ticket for the journey.
+Revenue_Per_Trip - Total revenue generated from ticket sales.
+Fuel_Consumption_Liters - Fuel consumed during the trip in liters.
+Fuel_Efficiency_KMPL - Fuel efficiency of the bus in kilometers per liter.
+Maintenance_Status - Indicates the current maintenance status.
+Last_Service_Date - Date when the bus was last serviced.
+Breakdown_Incidents - Number of breakdown incidents recorded.
+Disruption_Likelihood - Probability of trip disruption.
+Risk_Score - Risk assessment score for the trip.
+Delay_Probability - Probability of delay during the trip.
+Expense_Per_Trip - Total operational expenses per trip.
+Profit_Per_Trip - Profit earned per trip after expenses.
+Weather - Weather conditions during the journey.
+Festival_Season - Indicates if the trip falls during a festival season.
+Holiday - Indicates if the trip falls on a public holiday.
+Special_Event - Mentions any special event affecting the route.
+Avg_Travel_Time (mins) - Average time taken for the trip in minutes.
+Delay_Mins - Actual delay in minutes.
+Start_Desitination - Incorrect duplicate of Start_Destination.
+End_Destination - Destination point of the route.
+Distance_KM - Distance covered during the trip in kilometers.
+Start_Destination - Starting point of the route.
+Avg_Travel_Time_Mins - Duplicate of Avg_Travel_Time (mins).
+Weather_Impact - Impact of weather on the journey.
+Event_Type - Type of event affecting the trip (Festival, Holiday, etc.). 
 
     **You can scroll through the dataset below:**
     """)
