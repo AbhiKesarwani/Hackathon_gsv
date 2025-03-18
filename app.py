@@ -7,8 +7,8 @@ import os
 
 # Load dataset
 DATA_PATH = "data.csv"
-if os.path.exists(DATA_PATH):
-    df = pd.read_csv(DATA_PATH)
+if os.path.exists(dataset_updated):
+    df = pd.read_csv(dataset_updated)
 else:
     st.error("Dataset not found!")
 
