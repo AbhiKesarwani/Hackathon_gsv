@@ -76,7 +76,7 @@ elif page == "EDA":
 
 # Demand Forecasting Portal
 
-    elif page == "Demand Forecasting":
+elif page == "Demand Forecasting":
     st.title("📊 Passenger Demand Forecasting (Optimized)")
     st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
 
