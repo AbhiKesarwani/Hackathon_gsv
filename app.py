@@ -24,6 +24,13 @@ else:
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Dataset", "EDA", "Demand Forecasting", "Upload Data"])
 
+# Add a red background note
+warning_html = """
+    <div style="background-color:#ffcccc; padding:10px; border-radius:5px; text-align:center;">
+        <h4 style="color:red;">🚧 This section is under process. Some functionalities may not work as expected. 🚧</h4>
+    </div>
+"""
+
 # Home Page
 if page == "Home":
     st.title("🚌 GSRTC Data-Driven Insights Dashboard")
@@ -78,6 +85,8 @@ elif page == "EDA":
 
 # Demand Forecasting Portal
 elif page == "Demand Forecasting":
+    st.markdown(warning_html, unsafe_allow_html=True)  # Display the red warning box
+    st.write("This section will provide demand forecasting using predictive models.")
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
     
