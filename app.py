@@ -89,7 +89,7 @@ elif page == "Demand Forecasting":
     st.markdown(warning_html, unsafe_allow_html=True)  # Display the red warning box
     st.write("This section will provide demand forecasting using predictive models.")
     st.title("📈 Passenger Demand Forecasting")
-    st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
+    st.write("Using **SARIMA** for fast and efficient demand prediction.")
     
     st.image("Demand Forecast.png", caption="🚌 Demand Forecasting")   
 
