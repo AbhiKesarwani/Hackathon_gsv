@@ -77,8 +77,6 @@ elif page == "EDA":
     st.image("total_trips_by_occupancy.png", caption="🚌 Total Trips by Occupancy")
 
 # Demand Forecasting Portal
-
-
 elif page == "📈 Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
