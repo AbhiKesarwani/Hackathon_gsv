@@ -13,6 +13,7 @@ from sklearn.metrics import mean_squared_error
 DATA_PATH = "updated_data.csv"
 if os.path.exists(DATA_PATH):
     df = pd.read_csv(DATA_PATH, parse_dates=['Date'], dayfirst=True)
+    df = df.remove[:, ~df.columns.str.contains('^Unnamed')]
     if df.empty:
         st.error("❌ Dataset is empty. Please upload valid data.")
         st.stop()
@@ -56,8 +57,7 @@ elif page == "Dataset":
     ### 📊 Sample Data:
     """)
 
-    # Remove Unnamed Columns
-    df_cleaned = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
 
     st.dataframe(df_cleaned, height=400, width=1000)  # Enables scrolling in both directions
     st.download_button("⬇️ Download Dataset", df_cleaned.to_csv(index=False), "dataset.csv", "text/csv")
