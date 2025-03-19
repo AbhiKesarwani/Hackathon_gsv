@@ -35,10 +35,47 @@ warning_html = """
 # Home Page
 if page == "Home":
     st.title("🚌 GSRTC Data-Driven Insights Dashboard")
-    st.write("""
-    ## 🚀 Problem Statement
-    GSRTC currently operates with fragmented data across multiple departments, leading to inefficiencies in decision-making, inaccurate demand forecasting, and suboptimal resource utilization.
+    
+        # Add project progress section
+    st.markdown("## 📌 **Project Achievements So Far**")
+    
+    st.markdown("""
+    ✅ **Data Cleaning & Preprocessing**
+    - Removed duplicate and unnamed columns.
+    - Ensured uniform data format and column consistency.
+    - Filled missing values in uploaded data while maintaining integrity.
 
+    ✅ **Exploratory Data Analysis (EDA)**
+    - **Power BI Dashboards** for visual insights 📊.
+    - Examined trends in fuel consumption, delays, and route profitability.
+    - Analyzed seasonal variations in demand and travel patterns.
+
+    ✅ **Demand Forecasting**
+    - Implemented **Exponential Smoothing** for accurate passenger predictions.
+    - Developed a forecasting model to optimize bus scheduling.
+    - Integrated **RMSE Evaluation** to ensure model accuracy.
+
+    ✅ **Dynamic Data Upload & Management**
+    - Allowed **new data uploads** while ensuring column consistency.
+    - **Handled missing columns** by filling them with null values.
+    - Prevented incorrect column mapping to avoid data corruption.
+
+    ✅ **Downloadable Reports**
+    - Users can download **full datasets** post-processing.
+    - Ensured no data loss during downloads.
+
+    🚧 **Upcoming Enhancements**:
+    - **Predictive Maintenance (Under Process) 🔧**
+        - Machine learning models to **predict breakdowns**.
+        - Reduce unexpected failures and improve efficiency.
+    - **Advanced Time-Series Forecasting**
+        - Implementing **SARIMA, LSTM, Prophet** for better accuracy.
+    - **Geospatial Route Analysis**
+        - Visualizing route performance and bottlenecks using maps.
+    - **Real-time Anomaly Detection**
+        - Identifying unusual delays, fuel inefficiencies, and disruptions.""")
+    
+    st.write("""
     ## ⚠ Challenges
     - Lack of a centralized data platform
     - Inefficient scheduling and resource allocation
