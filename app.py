@@ -116,7 +116,7 @@ elif page == "Demand Forecasting":
       
 
 # Data Upload Portal
-elif page == "📤 Upload Data":
+elif page == "Upload Data":
     st.title("📤 Upload New Data")
     
     uploaded_file = st.file_uploader("📁 Choose a CSV file", type="csv")
