@@ -118,18 +118,17 @@ elif page == "Demand Forecasting":
 # Data Upload Portal
 elif page == "Upload Data":
     st.title("📤 Upload New Data")
-    
+
     uploaded_file = st.file_uploader("📁 Choose a CSV file", type="csv")
 
     if uploaded_file is not None:
         # Read uploaded file
-        new_data = pd.read_csv(uploaded_file)
+        new_data = pd.read_csv(uploaded_file, index_col=0).loc[:, ~df.columns.str.contains('^Unnamed')]
 
-        # Remove 'Unnamed: 0' if present in either dataset
+        # Remove any accidental unnamed columns in the uploaded file
         new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]
-        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
-        # **Check for Column Mismatch (Ignoring Index Columns)**
+        # Ensure column consistency
         expected_columns = set(df.columns)
         uploaded_columns = set(new_data.columns)
 
@@ -138,12 +137,13 @@ elif page == "Upload Data":
             st.write("### ✅ Expected Columns:", list(expected_columns))
             st.write("### 🔄 Uploaded Columns:", list(uploaded_columns))
         else:
-            # Append the new data
+            # Append new data
             new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
-            st.success("✅ Data successfully uploaded and added to the existing dataset!")
+            st.success("✅ Data successfully uploaded!")
 
-            # Reload dataset
-            df = pd.read_csv(DATA_PATH).loc[:, ~df.columns.str.contains('^Unnamed')]
+            # Reload dataset properly
+            df = pd.read_csv(DATA_PATH, index_col=0).loc[:, ~df.columns.str.contains('^Unnamed')]
 
             st.write("### 🔍 Updated Dataset Preview")
             st.dataframe(df.tail(10))
+
