@@ -109,23 +109,17 @@ elif page == "Upload Data":
         expected_columns = set(df.columns)
         uploaded_columns = set(new_data.columns)
 
-        if expected_columns != uploaded_columns:
-            st.error("❌ Column mismatch! Ensure the uploaded file has the same structure as the dataset.")
-            st.write("### ✅ Expected Columns:", list(expected_columns))
-            st.write("### 🔄 Uploaded Columns:", list(uploaded_columns))
-        else:
-            # Append new data
-            new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
-            st.success("✅ Data successfully uploaded!")
+        # Append new data
+        new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
+        st.success("✅ Data successfully uploaded!")
+            
+        # Reload dataset properly
+        df = pd.read_csv(DATA_PATH)
+        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure Unnamed columns are removed
+        st.write("### 🔍 Updated Dataset Preview")
+        st.dataframe(df.tail(10))
 
-            # Reload dataset properly
-            df = pd.read_csv(DATA_PATH)
-            df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure Unnamed columns are removed
-
-            st.write("### 🔍 Updated Dataset Preview")
-            st.dataframe(df.tail(10))
-
-            st.write("### 🔍 Updated Dataset Preview")
-            st.dataframe(df.tail(10))
+        st.write("### 🔍 Updated Dataset Preview")
+        st.dataframe(df.tail(10))
         
 
