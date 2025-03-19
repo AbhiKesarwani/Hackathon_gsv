@@ -132,9 +132,6 @@ elif page == "Upload Data":
         df = pd.read_csv(DATA_PATH)
         df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure "Unnamed" columns are removed
 
-        st.write("### 🔍 Full Updated Dataset")
-        st.dataframe(df)
-
         # **Download Button for Full Data**
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button("⬇️ Download Full Dataset", data=csv, file_name="full_dataset.csv", mime="text/csv")
