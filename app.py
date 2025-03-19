@@ -104,31 +104,40 @@ elif page == "Upload Data":
         new_data = pd.read_csv(uploaded_file)
         new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]  # ✅ Remove "Unnamed" columns
 
-        expected_columns = set(df.columns)
-        uploaded_columns = set(new_data.columns)
+        expected_columns = list(df.columns)
+        uploaded_columns = list(new_data.columns)
 
-        # **Check if new columns exist in the uploaded file**
-        extra_columns = uploaded_columns - expected_columns
+        # **Check for extra columns in uploaded file**
+        extra_columns = set(uploaded_columns) - set(expected_columns)
         if extra_columns:
-            st.error("❌ Column mismatch! The uploaded file contains **new columns** that are not in the dataset.")
-            st.write("### ❌ Unexpected Columns:", sorted(list(extra_columns)))
+            st.error("❌ Column mismatch! The uploaded file contains **unexpected columns**.")
+            st.write("### ❌ Unexpected Columns in Upload:", sorted(list(extra_columns)))
             st.stop()
 
-        # **Add missing columns from expected dataset (fill with NaN)**
-        for col in expected_columns:
-            if col not in uploaded_columns:
+        # **Check for missing columns in uploaded file**
+        missing_columns = set(expected_columns) - set(uploaded_columns)
+        if missing_columns:
+            st.warning("⚠️ Some columns are missing in the uploaded file. They will be filled with NaN.")
+            for col in missing_columns:
                 new_data[col] = pd.NA  # Fill missing columns with null
 
-        # **Reorder columns to match the dataset**
-        new_data = new_data[df.columns]
+        # **Ensure the column order is exactly the same**
+        new_data = new_data[expected_columns]
 
-        # Append new data **without adding an index**
+        # **Append new data**
         new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
         st.success("✅ Data successfully uploaded!")
 
-        # Reload and clean dataset again
+        # Reload the full dataset
         df = pd.read_csv(DATA_PATH)
         df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure "Unnamed" columns are removed
+
+        st.write("### 🔍 Full Updated Dataset")
+        st.dataframe(df)
+
+        # **Download Button for Full Data**
+        csv = df.to_csv(index=False).encode('utf-8')
+        st.download_button("⬇️ Download Full Dataset", data=csv, file_name="full_dataset.csv", mime="text/csv")
 
         st.write("### 🔍 Updated Dataset Preview")
         st.dataframe(df)
