@@ -80,38 +80,11 @@ elif page == "EDA":
 elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
+    
+     st.image("Screenshot 2025-03-09 131032.png", caption="🚌 Deamnd Forecasting")
 
-    df_daily = df.groupby('Date').agg({'Seats_Booked': 'sum'}).reset_index().sort_values(by='Date')
-
-    df_daily['Seats_Booked'] = pd.to_numeric(df_daily['Seats_Booked'], errors='coerce')
-    df_daily = df_daily.dropna(subset=['Seats_Booked'])
-
-    if len(df_daily) < 10:
-        st.error("❌ Not enough data points for forecasting. Please upload more historical data.")
-    else:
-        train_size = int(len(df_daily) * 0.8)
-        train, test = df_daily[:train_size], df_daily[train_size:]
-
-        try:
-            model = ExponentialSmoothing(train['Seats_Booked'], trend="add", seasonal="add", seasonal_periods=7)
-            model_fit = model.fit()
-        except ValueError as e:
-            st.error(f"❌ Model Training Error: {e}")
-            st.stop()
-
-        test_forecast = model_fit.forecast(len(test))
-        rmse = np.sqrt(mean_squared_error(test['Seats_Booked'], test_forecast))
-
-        future_steps = st.slider("📅 Select Forecast Duration (Days)", min_value=7, max_value=90, value=30)
-        future_forecast = model_fit.forecast(future_steps)
-        future_dates = pd.date_range(start=df_daily['Date'].iloc[-1] + pd.Timedelta(days=1), periods=future_steps)
-
-        fig, ax = plt.subplots(figsize=(12, 6))
-        ax.plot(df_daily['Date'], df_daily['Seats_Booked'], label="Actual Data", color="blue")
-        ax.plot(df_daily['Date'][len(train):], test_forecast, label="Test Forecast", linestyle="dashed", color="green")
-        ax.plot(future_dates, future_forecast, label=f"Next {future_steps} Days Forecast", linestyle="dashed", color="red")
-        ax.legend()
-        st.pyplot(fig)
+   
+    
 
       
 
