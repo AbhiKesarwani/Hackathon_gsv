@@ -118,31 +118,34 @@ elif page == "📈 Demand Forecasting":
       
 
 # Data Upload Portal
-elif page == "Upload Data":
+elif page == "📤 Upload Data":
     st.title("📤 Upload New Data")
     
-    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    uploaded_file = st.file_uploader("📁 Choose a CSV file", type="csv")
 
     if uploaded_file is not None:
-        # Read the uploaded file
+        # Read uploaded file
         new_data = pd.read_csv(uploaded_file)
 
-        # Remove unnamed columns from uploaded file
-        new_data = new_data.loc[:, ~new_data.columns.str.contains('Unnamed')]
+        # Remove 'Unnamed: 0' if present in either dataset
+        new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]
+        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
-        # *Check for Column Mismatch*
-        if set(new_data.columns) != set(df.columns):
+        # **Check for Column Mismatch (Ignoring Index Columns)**
+        expected_columns = set(df.columns)
+        uploaded_columns = set(new_data.columns)
+
+        if expected_columns != uploaded_columns:
             st.error("❌ Column mismatch! Ensure the uploaded file has the same structure as the dataset.")
-            st.write("### ✅ Expected Columns:", list(df.columns))
-            st.write("### 🔄 Uploaded Columns:", list(new_data.columns))
+            st.write("### ✅ Expected Columns:", list(expected_columns))
+            st.write("### 🔄 Uploaded Columns:", list(uploaded_columns))
         else:
             # Append the new data
             new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
             st.success("✅ Data successfully uploaded and added to the existing dataset!")
 
-            # Reload updated dataset
-            df = pd.read_csv(DATA_PATH).loc[:, ~df.columns.str.contains('Unnamed')]
+            # Reload dataset
+            df = pd.read_csv(DATA_PATH).loc[:, ~df.columns.str.contains('^Unnamed')]
 
-            # Show updated dataset
             st.write("### 🔍 Updated Dataset Preview")
-            st.dataframe(df.tail(10))  # Show last 10 rows
+            st.dataframe(df.tail(10))
