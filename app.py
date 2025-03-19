@@ -13,7 +13,7 @@ from sklearn.metrics import mean_squared_error
 DATA_PATH = "updated_data.csv"
 if os.path.exists(DATA_PATH):
     df = pd.read_csv(DATA_PATH, parse_dates=['Date'], dayfirst=True)
-    df = df.remove[:, ~df.columns.str.contains('^Unnamed')]
+    df_cleaned = df.remove[:, ~df.columns.str.contains('^Unnamed')]
     if df.empty:
         st.error("❌ Dataset is empty. Please upload valid data.")
         st.stop()
