@@ -123,8 +123,3 @@ elif page == "Upload Data":
 
             st.write("### 🔍 Updated Dataset Preview")
             st.dataframe(df.tail(10))
-
-        st.write("### 🔍 Updated Dataset Preview")
-        st.dataframe(df.tail(10))
-        
-
