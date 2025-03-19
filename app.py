@@ -12,7 +12,8 @@ from sklearn.metrics import mean_squared_error
 # Load dataset efficiently
 DATA_PATH = "updated_data.csv"
 if os.path.exists(DATA_PATH):
-    df = pd.read_csv(DATA_PATH, parse_dates=['Date'], dayfirst=True)
+    df = pd.read_csv(DATA_PATH)
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Remove "Unnamed" columns
     if df.empty:
         st.error("❌ Dataset is empty. Please upload valid data.")
         st.stop()
@@ -99,25 +100,29 @@ elif page == "Upload Data":
     uploaded_file = st.file_uploader("📁 Choose a CSV file", type="csv")
 
     if uploaded_file is not None:
-        # Read uploaded file **without setting index_col**
+        # Read uploaded file and clean it
         new_data = pd.read_csv(uploaded_file)
-        
-        # ✅ Remove 'Unnamed' columns from uploaded data
-        new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]
+        new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]  # ✅ Remove "Unnamed" columns
 
         # Ensure column consistency
         expected_columns = set(df.columns)
         uploaded_columns = set(new_data.columns)
 
-        # Append new data
-        new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
-        st.success("✅ Data successfully uploaded!")
-            
-        # Reload dataset properly
-        df = pd.read_csv(DATA_PATH)
-        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure Unnamed columns are removed
-        st.write("### 🔍 Updated Dataset Preview")
-        st.dataframe(df.tail(10))
+        if expected_columns != uploaded_columns:
+            st.error("❌ Column mismatch! Ensure the uploaded file has the same structure as the dataset.")
+            st.write("### ✅ Expected Columns:", sorted(list(expected_columns)))
+            st.write("### 🔄 Uploaded Columns:", sorted(list(uploaded_columns)))
+        else:
+            # Append new data **without adding an index**
+            new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
+            st.success("✅ Data successfully uploaded!")
+
+            # Reload and clean dataset again
+            df = pd.read_csv(DATA_PATH)
+            df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure "Unnamed" columns are removed
+
+            st.write("### 🔍 Updated Dataset Preview")
+            st.dataframe(df.tail(10))
 
         st.write("### 🔍 Updated Dataset Preview")
         st.dataframe(df.tail(10))
