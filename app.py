@@ -131,6 +131,6 @@ elif page == "Upload Data":
         df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure "Unnamed" columns are removed
 
         st.write("### 🔍 Updated Dataset Preview")
-        st.dataframe(df.tail(10))
+        st.dataframe(df)
 
  
