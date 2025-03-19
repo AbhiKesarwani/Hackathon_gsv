@@ -147,11 +147,29 @@ elif page == "Demand Forecasting":
 # Data Upload Portal
 elif page == "Upload Data":
     st.title("📤 Upload New Data")
+    
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+
     if uploaded_file is not None:
+        # Read the uploaded file
         new_data = pd.read_csv(uploaded_file)
-        if set(new_data.columns) == set(df.columns):
-            new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
-            st.success("✅ Data successfully uploaded and merged!")
-        else:
+
+        # Remove unnamed columns from uploaded file
+        new_data = new_data.loc[:, ~new_data.columns.str.contains('Unnamed')]
+
+        # **Check for Column Mismatch**
+        if set(new_data.columns) != set(df.columns):
             st.error("❌ Column mismatch! Ensure the uploaded file has the same structure as the dataset.")
+            st.write("### ✅ Expected Columns:", list(df.columns))
+            st.write("### 🔄 Uploaded Columns:", list(new_data.columns))
+        else:
+            # Append the new data
+            new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
+            st.success("✅ Data successfully uploaded and added to the existing dataset!")
+
+            # Reload updated dataset
+            df = pd.read_csv(DATA_PATH).loc[:, ~df.columns.str.contains('Unnamed')]
+
+            # Show updated dataset
+            st.write("### 🔍 Updated Dataset Preview")
+            st.dataframe(df.tail(10))  # Show last 10 rows
