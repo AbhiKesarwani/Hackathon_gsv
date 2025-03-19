@@ -99,9 +99,9 @@ elif page == "Upload Data":
     uploaded_file = st.file_uploader("📁 Choose a CSV file", type="csv")
 
     if uploaded_file is not None:
-        # Read uploaded file
-        new_data = pd.read_csv(uploaded_file, index_col=0).loc[:, ~df.columns.str.contains('^Unnamed')]
-
+        # Read uploaded file **without setting index_col**
+        new_data = pd.read_csv(uploaded_file)
+        
         # Remove any accidental unnamed columns in the uploaded file
         new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]
 
@@ -119,8 +119,10 @@ elif page == "Upload Data":
             st.success("✅ Data successfully uploaded!")
 
             # Reload dataset properly
-            df = pd.read_csv(DATA_PATH, index_col=0).loc[:, ~df.columns.str.contains('^Unnamed')]
+            df = pd.read_csv(DATA_PATH)
+            df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
             st.write("### 🔍 Updated Dataset Preview")
             st.dataframe(df.tail(10))
+        
 
