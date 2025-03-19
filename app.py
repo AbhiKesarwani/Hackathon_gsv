@@ -102,7 +102,7 @@ elif page == "Upload Data":
         # Read uploaded file **without setting index_col**
         new_data = pd.read_csv(uploaded_file)
         
-        # Remove any accidental unnamed columns in the uploaded file
+        # ✅ Remove 'Unnamed' columns from uploaded data
         new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]
 
         # Ensure column consistency
@@ -120,7 +120,10 @@ elif page == "Upload Data":
 
             # Reload dataset properly
             df = pd.read_csv(DATA_PATH)
-            df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+            df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure Unnamed columns are removed
+
+            st.write("### 🔍 Updated Dataset Preview")
+            st.dataframe(df.tail(10))
 
             st.write("### 🔍 Updated Dataset Preview")
             st.dataframe(df.tail(10))
