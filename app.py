@@ -81,7 +81,7 @@ elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using **Exponential Smoothing** for fast and efficient demand prediction.")
     
-     st.image("Screenshot 2025-03-09 131032.png", caption="🚌 Deamnd Forecasting")
+    st.image("Screenshot 2025-03-09 131032.png", caption="🚌 Deamnd Forecasting")
 
    
     
