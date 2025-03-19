@@ -12,9 +12,7 @@ from sklearn.metrics import mean_squared_error
 # Load dataset efficiently
 DATA_PATH = "updated_data.csv"
 if os.path.exists(DATA_PATH):
-    df = pd.read_csv(DATA_PATH, parse_dates=['Date'], dayfirst=True, usecols=[
-        'Date', 'Route_ID', 'Seats_Booked', 'Fuel_Consumption_Liters', 'Total_Seats', 'Ticket_Price'
-    ])
+    df = pd.read_csv(DATA_PATH, parse_dates=['Date'], dayfirst=True)
     if df.empty:
         st.error("❌ Dataset is empty. Please upload valid data.")
         st.stop()
