@@ -104,22 +104,33 @@ elif page == "Upload Data":
         new_data = pd.read_csv(uploaded_file)
         new_data = new_data.loc[:, ~new_data.columns.str.contains('^Unnamed')]  # ✅ Remove "Unnamed" columns
 
-        # Ensure column consistency
         expected_columns = set(df.columns)
         uploaded_columns = set(new_data.columns)
 
-        if expected_columns != uploaded_columns:
-            st.error("❌ Column mismatch! Ensure the uploaded file has the same structure as the dataset.")
-            st.write("### ✅ Expected Columns:", sorted(list(expected_columns)))
-            st.write("### 🔄 Uploaded Columns:", sorted(list(uploaded_columns)))
-        else:
-            # Append new data **without adding an index**
-            new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
-            st.success("✅ Data successfully uploaded!")
+        # **Check if new columns exist in the uploaded file**
+        extra_columns = uploaded_columns - expected_columns
+        if extra_columns:
+            st.error("❌ Column mismatch! The uploaded file contains **new columns** that are not in the dataset.")
+            st.write("### ❌ Unexpected Columns:", sorted(list(extra_columns)))
+            st.stop()
 
-            # Reload and clean dataset again
-            df = pd.read_csv(DATA_PATH)
-            df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure "Unnamed" columns are removed
+        # **Add missing columns from expected dataset (fill with NaN)**
+        for col in expected_columns:
+            if col not in uploaded_columns:
+                new_data[col] = pd.NA  # Fill missing columns with null
 
-            st.write("### 🔍 Updated Dataset Preview")
-            st.dataframe(df.tail(10))
+        # **Reorder columns to match the dataset**
+        new_data = new_data[df.columns]
+
+        # Append new data **without adding an index**
+        new_data.to_csv(DATA_PATH, mode='a', header=False, index=False)
+        st.success("✅ Data successfully uploaded!")
+
+        # Reload and clean dataset again
+        df = pd.read_csv(DATA_PATH)
+        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # ✅ Ensure "Unnamed" columns are removed
+
+        st.write("### 🔍 Updated Dataset Preview")
+        st.dataframe(df.tail(10))
+
+ 
