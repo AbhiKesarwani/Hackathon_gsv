@@ -56,7 +56,8 @@ elif page == "Dataset":
     ### 📊 Sample Data:
     """)
 
-
+    # Remove Unnamed Columns
+    df_cleaned = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
     st.dataframe(df_cleaned, height=400, width=1000)  # Enables scrolling in both directions
     st.download_button("⬇ Download Dataset", df_cleaned.to_csv(index=False), "dataset.csv", "text/csv")
