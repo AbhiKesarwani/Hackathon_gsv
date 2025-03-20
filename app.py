@@ -41,10 +41,15 @@ model_path = "model.pkl"
 
 # Download SARIMA model if not already downloaded
 if not os.path.exists(model_path):
-    url = "https://drive.google.com/file/d/1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp/view?usp=sharing"
+    url = "https://drive.google.com/file/d/1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp"
     st.info("Downloading SARIMA model... This will take a few seconds ⏳")
     gdown.download(url, model_path, quiet=False)
-
+try:
+    with open(model_path, "rb") as file:
+        sarima_model = pickle.load(file)
+    print("✅ Model loaded successfully!")
+except Exception as e:
+    print(f"❌ Error loading model: {e}")
 # Load the trained SARIMA model
 with open(model_path, "rb") as file:
     sarima_model = pickle.load(file)
