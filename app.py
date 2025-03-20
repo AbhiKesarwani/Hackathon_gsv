@@ -39,10 +39,13 @@ warning_html = """
 file_id = "1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp"
 model_path = "model.pkl"
 
+
 # Download SARIMA model if not already downloaded
 if not os.path.exists(model_path):
     url = "https://drive.google.com/file/d/1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp"
     st.info("Downloading SARIMA model... This will take a few seconds ⏳")
+    if os.path.exists(model_path):
+        os.remove(model_path)
     gdown.download(f"https://drive.google.com/uc?id={file_id}", model_path, quiet=False)
 
 try:
