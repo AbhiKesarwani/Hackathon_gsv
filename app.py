@@ -48,8 +48,11 @@ if not os.path.exists(model_path):
 
 try:
     with open(model_path, "rb") as file:
-        sarima_model = pickle.load(file, encoding="latin1")
-    print("✅ Model loaded successfully!")
+        content = file.read(100)  # Read the first 100 bytes
+        print(content)
+
+        sarima_model = pickle.load(file)
+        print("✅ Model loaded successfully!")
 except Exception as e:
     print(f"❌ Error loading model: {e}")
 # Load the trained SARIMA model
