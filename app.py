@@ -3,11 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+
 import numpy as np
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from sklearn.metrics import mean_squared_error
+
 
 # Load dataset efficiently
 DATA_PATH = "updated_data.csv"
@@ -31,6 +33,20 @@ warning_html = """
         <h4 style="color:red;">🚧 This section is under process. Some functionalities may not work as expected. 🚧</h4>
     </div>
 """
+
+# Google Drive file ID for SARIMA model
+file_id = "1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp"
+model_path = "model.pkl"
+
+# Download SARIMA model if not already downloaded
+if not os.path.exists(model_path):
+    url = "https://drive.google.com/file/d/1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp/view?usp=sharing"
+    st.info("Downloading SARIMA model... This will take a few seconds ⏳")
+    gdown.download(url, model_path, quiet=False)
+
+# Load the trained SARIMA model
+with open(model_path, "rb") as file:
+    sarima_model = pickle.load(file)
 
 # Home Page
 if page == "Home":
@@ -123,12 +139,39 @@ elif page == "EDA":
 
 # Demand Forecasting Portal
 elif page == "Demand Forecasting":
-    st.markdown(warning_html, unsafe_allow_html=True)  # Display the red warning box
-    st.write("This section will provide demand forecasting using predictive models.")
-    st.title("📈 Passenger Demand Forecasting")
-    st.write("Using **SARIMA** for fast and efficient demand prediction.")
-    
-    st.image("Demand Forecast.png", caption="🚌 Demand Forecasting")   
+     # Select forecast duration
+    future_days = st.slider("Select forecast period (days)", 7, 90, 30)
+
+    # Extract relevant data for prediction
+    df_daily = df.groupby('Date').agg({'Seats_Booked': 'sum'}).reset_index()
+    df_daily = df_daily.sort_values(by='Date')
+
+    # Generate forecast for selected days
+    future_forecast = sarima_model.forecast(steps=future_days)
+
+    # Create future dates for visualization
+    future_dates = pd.date_range(start=df_daily['Date'].iloc[-1] + pd.Timedelta(days=1), periods=future_days)
+
+    # Plot results
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(df_daily['Date'], df_daily['Seats_Booked'], label="Actual Demand", color="blue")
+    ax.plot(future_dates, future_forecast, label="Forecasted Demand", linestyle="dashed", color="red")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Seats Booked")
+    ax.set_title(f"🚀 Demand Forecast for Next {future_days} Days")
+    ax.legend()
+    ax.grid()
+
+    st.pyplot(fig)
+
+    # Show forecasted values
+    forecast_df = pd.DataFrame({"Date": future_dates, "Forecasted Seats": future_forecast})
+    st.write("📊 **Forecasted Demand Data:**")
+    st.dataframe(forecast_df)
+
+    # Option to download forecast results
+    csv = forecast_df.to_csv(index=False).encode("utf-8")
+    st.download_button("⬇ Download Forecast Data", data=csv, file_name="demand_forecast.csv", mime="text/csv") 
 
 # Data Upload Portal
 elif page == "Upload Data":
