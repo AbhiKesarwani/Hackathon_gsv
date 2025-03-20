@@ -39,6 +39,11 @@ warning_html = """
 file_id = "1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp"
 model_path = "model.pkl"
 
+if not os.path.exists(model_path):
+    st.error(f"❌ Model file '{model_path}' not found. Please check the file path.")
+    st.stop()
+
+
 # Download SARIMA model if not already downloaded
 if not os.path.exists(model_path):
     url = "https://drive.google.com/file/d/1jsZRz7pQuo8GmqnEzST3j6vkpzMXYbZp"
