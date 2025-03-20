@@ -219,5 +219,3 @@ elif page == "Upload Data":
 
         st.write("### 🔍 Updated Dataset Preview")
         st.dataframe(df)
-
- 
