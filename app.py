@@ -3,7 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-
+import pickle
+import gdown
 import numpy as np
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller
