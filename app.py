@@ -175,7 +175,7 @@ elif page == "Demand Forecasting":
     st.write("📊 **Forecasted Demand Data:**")
     st.dataframe(forecast_df)
 
-    # Option to download forecast results
+    # Option to download forecast results 
     csv = forecast_df.to_csv(index=False).encode("utf-8")
     st.download_button("⬇ Download Forecast Data", data=csv, file_name="demand_forecast.csv", mime="text/csv") 
 
