@@ -12,42 +12,6 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 from sklearn.metrics import mean_squared_error
 from twilio.rest import Client
 
-authenticator = stauth.Authenticate(
-    credentials=config["credentials"],
-    cookie_name="gsrtc_dashboard",
-    key="some_random_key",
-    cookie_expiry_days=1
-)
-
-# User Login
-name, authentication_status, username = authenticator.login("Login", "main")
-
-# Check Authentication Status
-if authentication_status is False:
-    st.error("❌ Incorrect username or password. Please try again.")
-elif authentication_status is None:
-    st.warning("🔒 Please enter your credentials to log in.")
-    st.stop()
-
-# Page Configuration
-st.set_page_config(page_title="GSRTC Data Platform", layout="wide")
-
-# Logout Option
-authenticator.logout("Logout", "sidebar")
-st.sidebar.write(f"👤 Logged in as: **{name}**")
-
-def set_background(image_url):
-    st.markdown(
-        f"""
-        <style>
-            .stApp {{
-                background: url({image_url}) no-repeat center center fixed;
-                background-size: cover;
-            }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
 st.set_page_config(page_title="GSRTC Data Platform", layout="wide")
 
 # Load dataset efficiently
