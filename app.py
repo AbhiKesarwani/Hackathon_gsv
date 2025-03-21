@@ -24,7 +24,8 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True
     )
-    
+st.set_page_config(page_title="GSRTC Data Platform", layout="wide")
+
 # Load dataset efficiently
 DATA_PATH = "updated_data.csv"
 if os.path.exists(DATA_PATH):
