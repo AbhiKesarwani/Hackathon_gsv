@@ -282,6 +282,8 @@ elif page == "Demand Forecasting":
     st.dataframe(df_forecast_2, height=400, width=1000)
     st.download_button("⬇ Download Seat Forecast", df_forecast_2.to_csv(index=False), "forecast_seat.csv", "text/csv")
 
+    st.image("delay_mins.jpg", caption="🚌 Delay Minutes") 
+
     DATA_PATH_1 = "forecast_delay_mins.csv"
     if os.path.exists(DATA_PATH_1):
         df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ First, read the CSV
@@ -299,6 +301,7 @@ elif page == "Demand Forecasting":
     
 
     # --- Load Fuel Consumption Forecast ---
+    st.image("fuel_consumption.jpg", caption="🚌 Fuel Consumption")
     DATA_PATH_3 = "forecast_consumption_fuel.csv"
     if os.path.exists(DATA_PATH_3):
         df_forecast_3 = pd.read_csv(DATA_PATH_3)
