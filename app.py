@@ -174,31 +174,28 @@ elif page == "Predictive Maintenance":
     uploaded_file = st.file_uploader("📁 Upload Maintenance Data (CSV)", type="csv")
 
     if uploaded_file is not None:
-        # Load uploaded data
+    # Load uploaded data
         new_data = pd.read_csv(uploaded_file)
 
-        # Define the expected feature order (same as when training the scaler)
-        expected_features = [
-            "Fuel_Consumption_Liters", "Fuel_Efficiency_KMPL", "Breakdown_Incidents",
-            "Disruption_Likelihood", "Risk_Score", "Delay_Probability",
-            "Expense_Per_Trip", "Profit_Per_Trip", "Avg_Travel_Time_Mins", "Weather_Impact"
-            ]
+        # Debug: Print column names
+        st.write("📝 Expected feature names:", scaler.feature_names_in_)
+        st.write("📂 Uploaded dataset columns:", new_data.columns.tolist())
 
-        # Ensure new_data has the expected columns in the correct order        
+        # Define expected features
+        expected_features = scaler.feature_names_in_
+    
+        # Check for missing columns
         missing_cols = set(expected_features) - set(new_data.columns)
-        extra_cols = set(new_data.columns) - set(expected_features)
-
         if missing_cols:
-            st.error(f"❌ Missing columns in uploaded data: {missing_cols}")
+            st.error(f"❌ Missing columns: {missing_cols}")
             st.stop()
 
-        if extra_cols:
-            st.warning(f"⚠ Extra columns detected: {extra_cols}. They will be dropped.")
-            new_data = new_data[expected_features]  # Keep only the required columns
+        # Ensure correct order & type
+        new_data = new_data[expected_features]
+        new_data = new_data.apply(pd.to_numeric, errors="coerce")
 
-        # Apply scaler
-        new_X_scaled = scaler.transform(new_data)
-
+        # Standardize data
+        new_X_scaled = scaler.transform(new_data)  # ✅ No more feature mismatch error
 
         # Predict Maintenance Status
         predictions = xgb_model.predict(new_X_scaled)
