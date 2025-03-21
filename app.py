@@ -296,7 +296,7 @@ elif page == "Demand Forecasting":
     st.download_button("⬇ Download Result", df_forecast_2.to_csv(index=False), "forecast_result.csv", "text/csv")
 
     DATA_PATH_3 = "forecast_consumption_fuel.csv"
-    if os.path.exists(DATA_PATH):
+    if os.path.exists(DATA_PATH_3):
         df_forecast_3 = pd.read_csv(DATA_PATH_3)  # ✅ Remove "Unnamed" columns
         if df_forecast_3.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
