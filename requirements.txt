@@ -8,3 +8,4 @@ joblib
 plotly.express
 gdown
 statsmodels
+xgboost
