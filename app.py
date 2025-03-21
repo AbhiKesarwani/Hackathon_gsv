@@ -168,6 +168,10 @@ if page == "Home":
     - Enhanced customer satisfaction with better service planning
     """)
 
+    st.markdown("---")  # Adds a horizontal line
+    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
+
+
 # Dataset Page
 elif page == "Dataset":
     
@@ -188,6 +192,9 @@ elif page == "Dataset":
     st.dataframe(df_cleaned, height=400, width=1000)  # Enables scrolling in both directions
     st.download_button("⬇ Download Dataset", df_cleaned.to_csv(index=False), "dataset.csv", "text/csv")
 
+    st.markdown("---")  # Adds a horizontal line
+    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
+
 
 # EDA Portal
 elif page == "EDA":
@@ -201,6 +208,9 @@ elif page == "EDA":
     st.image("seats_booked_per_month.png", caption="📆 Seats Booked Per Month")
     st.image("total_trips_by_delay_status.png", caption="⏳ Total Trips by Delay Status")
     st.image("total_trips_by_occupancy.png", caption="🚌 Total Trips by Occupancy")
+
+    st.markdown("---")  # Adds a horizontal line
+    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
 
 
 # **Predictive Maintenance Portal**
@@ -256,6 +266,10 @@ elif page == "Predictive Maintenance":
         # Display in Streamlit
         st.pyplot(fig)
 
+        st.markdown("---")  # Adds a horizontal line
+        st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
+
+
 # Demand Forecasting Portal
 elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
@@ -310,6 +324,10 @@ elif page == "Demand Forecasting":
     st.dataframe(df_forecast_3, height=400, width=1000)
     st.download_button("⬇ Download Fuel Forecast", df_forecast_3.to_csv(index=False), "forecast_fuel.csv", "text/csv")
 
+    st.markdown("---")  # Adds a horizontal line
+    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
+
+
 
 # Data Upload Portal
 elif page == "Upload Data":
@@ -357,6 +375,9 @@ elif page == "Upload Data":
         st.write("### 🔍 Updated Dataset Preview")
         st.dataframe(df)
 
+        st.markdown("---")  # Adds a horizontal line
+        st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
+
 elif page=="Query":
 
     # Twilio credentials 
@@ -388,6 +409,10 @@ elif page=="Query":
 
     if st.button("Send Request via SMS"):
         if user_request.strip():
+
+    st.markdown("---")  # Adds a horizontal line
+    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
+
             response = send_sms(user_request)
             st.success(response)
         else:
