@@ -301,7 +301,7 @@ elif page == "Demand Forecasting":
     
 
     # --- Load Fuel Consumption Forecast ---
-    st.image("fuel_consumption.jpg", caption="🚌 Fuel Consumption")
+    st.image("fuel_cons.jpg", caption="🚌 Fuel Consumption")
     DATA_PATH_3 = "forecast_consumption_fuel.csv"
     if os.path.exists(DATA_PATH_3):
         df_forecast_3 = pd.read_csv(DATA_PATH_3)
