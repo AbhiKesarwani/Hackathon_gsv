@@ -267,15 +267,11 @@ elif page == "Demand Forecasting":
     st.write("Using *SARIMA* for fast and efficient demand prediction.")
     
     st.image("Demand Forecast.png", caption="🚌 Demand Forecasting") 
-    df_cleaned = df.loc[:, ~df.columns.str.contains('^Unnamed')]
-
-    st.dataframe(df_cleaned, height=400, width=1000)  # Enables scrolling in both directions
-    st.download_button("⬇ Download Dataset", df_cleaned.to_csv(index=False), "dataset.csv", "text/csv")
 
 # loading the results for demand forecasting
     DATA_PATH_1 = "forecast_delay_mins.csv"
     if os.path.exists(DATA_PATH):
-        df_forecast_1 = pd.read_csv(DATA_PATH)  # ✅ Remove "Unnamed" columns
+        df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ Remove "Unnamed" columns
         if df_forecast_1.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
             st.stop()
