@@ -131,16 +131,16 @@ if page == "Home":
     # - Users can download *full datasets* post-processing.
     # - Ensured no data loss during downloads.
 
-    🚧 *Upcoming Enhancements*:
-    - *Predictive Maintenance (Under Process) 🔧*
-        - Machine learning models to *predict breakdowns*.
-        - Reduce unexpected failures and improve efficiency.
-    - *Advanced Time-Series Forecasting*
-        - Implementing *SARIMA, LSTM, Prophet* for better accuracy.
-    - *Geospatial Route Analysis*
-        - Visualizing route performance and bottlenecks using maps.
-    - *Real-time Anomaly Detection*
-        - Identifying unusual delays, fuel inefficiencies, and disruptions.""")
+    # 🚧 *Upcoming Enhancements*:
+    # - *Predictive Maintenance (Under Process) 🔧*
+    #     - Machine learning models to *predict breakdowns*.
+    #     - Reduce unexpected failures and improve efficiency.
+    # - *Advanced Time-Series Forecasting*
+    #     - Implementing *SARIMA, LSTM, Prophet* for better accuracy.
+    # - *Geospatial Route Analysis*
+    #     - Visualizing route performance and bottlenecks using maps.
+    # - *Real-time Anomaly Detection*
+    #     - Identifying unusual delays, fuel inefficiencies, and disruptions.""")
     
     st.write("""
     ## ⚠ Challenges
