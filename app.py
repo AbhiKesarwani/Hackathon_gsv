@@ -26,6 +26,8 @@ else:
 
 # Define paths
 MODEL_PATH = "xgb_model.pkl"
+SCALER_PATH = "scaler.pkl"
+
 
 # **Load Pretrained Model Efficiently**
 @st.cache_resource
