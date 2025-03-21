@@ -42,9 +42,25 @@ def load_model():
         st.error(f"⚠ Error loading model: {e}")
         st.stop()
 
+@st.cache_resource
+def load_scaler():
+    if not os.path.exists(SCALER_PATH):
+        st.error(f"❌ Scaler file not found at {SCALER_PATH}. Please upload a valid scaler file.")
+        st.stop()
+    
+    try:
+        with open(SCALER_PATH, "rb") as f:
+            scaler = pickle.load(f)
+        return scaler
+    except Exception as e:
+        st.error(f"⚠ Error loading scaler: {e}")
+        st.stop()
 
 # Load the model
 xgb_model = load_model()
+
+# Load the scaler
+scaler = load_scaler()
 
 # Sidebar Navigation
 st.sidebar.title("Navigation")
