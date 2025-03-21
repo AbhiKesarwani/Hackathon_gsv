@@ -100,24 +100,18 @@ if page == "Home":
     set_background("bg_1.jpg")
     st.title("🚌 GSRTC Data-Driven Insights Dashboard")
 
-    st.markdown("## What they aksed for?")
+    st.markdown("What They Expected from Us")
 
     st.markdown("""
-    1. **Unified Data Platform**  ✔️
-    - Centralized repository that consolidates all key operational data.
-    - Integrates all GSRTC data into one accessible platform.  
-    - The platform is optimized for **seamless access across all devices**, ensuring flexibility and ease of use.  
+    1. **Unified Data Platform** - A centralized system integrating all key operational data for seamless access. ✅  
 
-    2. **Exploratory Data Analysis (EDA)** ✔️ 
-    - Performed **in-depth data analysis** to uncover key insights from GSRTC operations. 
-    - Identified trends in **fuel consumption, delays, occupancy rates, and revenue patterns** to enhance decision-making.  
+    2. **Exploratory Data Analysis (EDA)** - In-depth data analysis to uncover insights on fuel consumption, delays, and occupancy. ✅
 
-    3. **Predictive Maintenance**  ✔️
-    - Developed **real-time predictive models** to proactively identify maintenance needs. 
+    3. **Predictive Maintenance** - – Machine learning models to predict vehicle breakdowns before they happen. ✅
 
-    4. **Demand Forecasting**
+    4. **Demand Forecasting** – Advanced time-series models to forecast passenger demand accurately. ✅
     
-    5. **Enhanced Decision Making**
+    5. **Enhanced Decision Making** -  – Actionable insights to optimize routes, fuel efficiency, and revenue. ✅
 
     📌 *With these milestones achieved, we are now moving towards more advanced analytics, real-time anomaly detection, and geospatial route analysis!*
     """)
