@@ -268,16 +268,18 @@ elif page == "Demand Forecasting":
     
     st.image("Demand Forecast.png", caption="🚌 Demand Forecasting") 
 
-    # --- Load Delay Forecasting Results ---
     DATA_PATH_1 = "forecast_delay_mins.csv"
     if os.path.exists(DATA_PATH_1):
-        df_forecast_1 = pd.read_csv(DATA_PATH_1).loc[:, ~df_forecast_1.columns.str.contains('^Unnamed')]
-        if df_forecast_1.empty:
-            st.error("❌ Dataset is empty. Please upload valid data.")
-            st.stop()
+        df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ First, read the CSV
+        df_forecast_1 = df_forecast_1.loc[:, ~df_forecast_1.columns.str.contains('^Unnamed')]  # ✅ Then, filter columns
+
+    if df_forecast_1.empty:
+        st.error("❌ Dataset is empty. Please upload valid data.")
+        st.stop()
     else:
         st.error("❌ Dataset not found. Please upload a valid file.")
         st.stop()
+
 
     st.dataframe(df_forecast_1, height=400, width=1000)
     st.download_button("⬇ Download Delay Forecast", df_forecast_1.to_csv(index=False), "forecast_delay.csv", "text/csv")
