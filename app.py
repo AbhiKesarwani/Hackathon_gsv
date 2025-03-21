@@ -292,7 +292,9 @@ elif page == "Demand Forecasting":
         st.success("✅ File uploaded successfully and matches required columns!")
 
         # Display Forecasting Results
-        st.image("Demand Forecast.png", caption="🚌 Demand Forecasting")    
+        st.image("Demand Forecast.png", caption="🚌 Demand Forecasting")
+        im = ['delay_mins',seats_booked','fuel_cons']
+        cap = ["Delay Minutes","Seats Booked","Fuel Consumption"]
 
         # Load and display results
         for i, data_path in enumerate(["forecast_delay_mins.csv", "forecast_seat_book.csv", "forecast_consumption_fuel.csv"], start=1):
@@ -305,6 +307,8 @@ elif page == "Demand Forecasting":
                 st.write(f"### 📊 Forecasting Results ({data_path})")
                 st.dataframe(df_forecast, height=400, width=1000)
                 st.download_button(f"⬇ Download {data_path}", df_forecast.to_csv(index=False), f"{data_path}.csv", "text/csv")
+                # Display Forecasting Results
+                st.image(f"{im[i-1]}.jpg", caption=f"{cap[i-1}")
             else:
                 st.error(f"❌ {data_path} not found. Please upload a valid file.")
 
