@@ -82,7 +82,7 @@ scaler = load_scaler()
 
 # Sidebar Navigation
 # Sidebar with Logo and Navigation
-st.sidebar.image("logo.jpg", use_container_width=True)  # Add your logo here
+st.sidebar.image("logo.png", use_container_width=True)  # Add your logo here
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Dataset", "EDA", "Predictive Maintenance", "Demand Forecasting", "Upload Data"])
 
