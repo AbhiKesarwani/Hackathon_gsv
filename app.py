@@ -12,6 +12,23 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 from sklearn.metrics import mean_squared_error
 from twilio.rest import Client
 
+# User Login
+name, authentication_status, username = authenticator.login("Login", "main")
+
+# Check Authentication Status
+if authentication_status is False:
+    st.error("❌ Incorrect username or password. Please try again.")
+elif authentication_status is None:
+    st.warning("🔒 Please enter your credentials to log in.")
+    st.stop()
+
+# Page Configuration
+st.set_page_config(page_title="GSRTC Data Platform", layout="wide")
+
+# Logout Option
+authenticator.logout("Logout", "sidebar")
+st.sidebar.write(f"👤 Logged in as: **{name}**")
+
 def set_background(image_url):
     st.markdown(
         f"""
