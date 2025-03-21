@@ -270,7 +270,7 @@ elif page == "Demand Forecasting":
 
 # loading the results for demand forecasting
     DATA_PATH_1 = "forecast_delay_mins.csv"
-    if os.path.exists(DATA_PATH):
+    if os.path.exists(DATA_PATH_1):
         df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ Remove "Unnamed" columns
         if df_forecast_1.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
@@ -296,6 +296,7 @@ elif page == "Demand Forecasting":
     st.download_button("⬇ Download Result", df_forecast_2.to_csv(index=False), "forecast_result.csv", "text/csv")
 
     DATA_PATH_3 = "forecast_consumption_fuel.csv"
+
     if os.path.exists(DATA_PATH_3):
         df_forecast_3 = pd.read_csv(DATA_PATH_3)  # ✅ Remove "Unnamed" columns
         if df_forecast_3.empty:
@@ -304,9 +305,10 @@ elif page == "Demand Forecasting":
     else:
         st.error("❌ Dataset not found. Please upload a valid file.")
         st.stop()
-
+    
     st.dataframe(df_forecast_3, height=400, width=1000)  # Enables scrolling in both directions
     st.download_button("⬇ Download Result", df_forecast_3.to_csv(index=False), "forecast_result.csv", "text/csv")
+
 
 # Data Upload Portal
 elif page == "Upload Data":
