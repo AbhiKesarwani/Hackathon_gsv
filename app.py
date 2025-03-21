@@ -409,12 +409,11 @@ elif page=="Query":
 
     if st.button("Send Request via SMS"):
         if user_request.strip():
-
-    st.markdown("---")  # Adds a horizontal line
-    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
-
             response = send_sms(user_request)
             st.success(response)
         else:
             st.error("Please enter a request before sending.")
+            
+    st.markdown("---")  # Adds a horizontal line
+    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
 
