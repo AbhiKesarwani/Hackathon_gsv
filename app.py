@@ -362,10 +362,10 @@ elif page == "Upload Data":
 elif page=="Query":
 
     # Twilio credentials (Replace these with your actual credentials)
-    TWILIO_ACCOUNT_SID = "AC879adaa8cb66b3a0f274bb60df0073c0" 
-    TWILIO_AUTH_TOKEN = "9a155fa7de4297aeca7012d5a327248e"
-    TWILIO_PHONE_NUMBER = "+13309021484"
-    YOUR_PHONE_NUMBER = "+918700442643"
+    WILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+    TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+    TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
+    YOUR_PHONE_NUMBER = os.getenv("YOUR_PHONE_NUMBER")
 
     # Function to send SMS
     def send_sms(message):
