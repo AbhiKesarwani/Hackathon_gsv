@@ -12,6 +12,13 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 from sklearn.metrics import mean_squared_error
 from twilio.rest import Client
 
+authenticator = stauth.Authenticate(
+    credentials=config["credentials"],
+    cookie_name="gsrtc_dashboard",
+    key="some_random_key",
+    cookie_expiry_days=1
+)
+
 # User Login
 name, authentication_status, username = authenticator.login("Login", "main")
 
