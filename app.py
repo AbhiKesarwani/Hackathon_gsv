@@ -292,7 +292,6 @@ elif page == "Demand Forecasting":
         st.success("✅ File uploaded successfully and matches required columns!")
 
         # Display Forecasting Results
-        st.image("Demand Forecast.png", caption="🚌 Demand Forecasting")
         im = ['delay_mins','seats_booked','fuel_cons']
         cap = ["Delay Minutes","Seats Booked","Fuel Consumption"]
 
