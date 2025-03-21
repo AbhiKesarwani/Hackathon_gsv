@@ -275,68 +275,58 @@ elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using *SARIMA* for fast and efficient demand prediction.")
 
+    # Load Main Dataset to Validate Features
+    MAIN_DATA_PATH = "updated_data.csv"
+    if os.path.exists(MAIN_DATA_PATH):
+        main_df = pd.read_csv(MAIN_DATA_PATH)
+        expected_columns = set(main_df.columns)
+    else:
+        st.error("❌ Main dataset not found. Please upload a valid reference file.")
+        st.stop()
+
     # File Upload Option
     uploaded_file = st.file_uploader("📤 Upload Forecast Data (CSV)", type="csv")
+
     if uploaded_file is not None:
-        # Save the uploaded file
+        # Read uploaded file
+        df_uploaded = pd.read_csv(uploaded_file)
+
+        # Validate Columns
+        uploaded_columns = set(df_uploaded.columns)
+        missing_columns = expected_columns - uploaded_columns
+        extra_columns = uploaded_columns - expected_columns
+
+        if missing_columns:
+            st.error(f"❌ Uploaded file is missing required columns: {missing_columns}")
+            st.stop()
+        elif extra_columns:
+            st.warning(f"⚠ Uploaded file contains extra columns that are not required: {extra_columns}")
+
+        # Save the validated file
         DATA_PATH = "uploaded_forecast_data.csv"
-        with open(DATA_PATH, "wb") as f:
-            f.write(uploaded_file.getbuffer())
+        df_uploaded.to_csv(DATA_PATH, index=False)
+        st.success("✅ File uploaded successfully and matches required columns!")
 
-        st.success("✅ File uploaded successfully!")
-       
-        st.image("Demand Forecast.png", caption="🚌 Seats Booked") 
+        # Display Forecasting Results
+        st.image("Demand Forecast.png", caption="🚌 Demand Forecasting")    
 
-        # --- Load Seat Booking Forecast ---
-        DATA_PATH_2 = "forecast_seat_book.csv"
-        if os.path.exists(DATA_PATH_2):  # ✅ Fixed variable name
-            df_forecast_2 = pd.read_csv(DATA_PATH_2)
-            if df_forecast_2.empty:
-                st.error("❌ Dataset is empty. Please upload valid data.")
-                st.stop()
-        else:
-            st.error("❌ Dataset not found. Please upload a valid file.")
-            st.stop()
+        # Load and display results
+        for i, data_path in enumerate(["forecast_delay_mins.csv", "forecast_seat_book.csv", "forecast_consumption_fuel.csv"], start=1):
+            if os.path.exists(data_path):
+                df_forecast = pd.read_csv(data_path)
+                if df_forecast.empty:
+                    st.error(f"❌ {data_path} is empty. Please upload valid data.")
+                    continue
 
-        st.dataframe(df_forecast_2, height=400, width=1000)
-        st.download_button("⬇ Download Seat Forecast", df_forecast_2.to_csv(index=False), "forecast_seat.csv", "text/csv")
+                st.write(f"### 📊 Forecasting Results ({data_path})")
+                st.dataframe(df_forecast, height=400, width=1000)
+                st.download_button(f"⬇ Download {data_path}", df_forecast.to_csv(index=False), f"{data_path}.csv", "text/csv")
+            else:
+                st.error(f"❌ {data_path} not found. Please upload a valid file.")
 
-        st.image("delay_mins.jpg", caption="🚌 Delay Minutes") 
-
-        DATA_PATH_1 = "forecast_delay_mins.csv"
-        if os.path.exists(DATA_PATH_1):
-            df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ First, read the CSV
-            if df_forecast_1.empty:
-                st.error("❌ Dataset is empty. Please upload valid data.")
-                st.stop()
-        else:
-            st.error("❌ Dataset not found. Please upload a valid file.")
-            st.stop()
-
-
-        st.dataframe(df_forecast_1, height=400, width=1000)
-        st.download_button("⬇ Download Delay Forecast", df_forecast_1.to_csv(index=False), "forecast_delay.csv", "text/csv")
-
-    
-
-        # --- Load Fuel Consumption Forecast ---
-        st.image("fuel_cons.jpg", caption="🚌 Fuel Consumption")
-        DATA_PATH_3 = "forecast_consumption_fuel.csv"
-        if os.path.exists(DATA_PATH_3):
-            df_forecast_3 = pd.read_csv(DATA_PATH_3)
-            if df_forecast_3.empty:
-                st.error("❌ Dataset is empty. Please upload valid data.")
-                st.stop()
-        else:
-            st.error("❌ Dataset not found. Please upload a valid file.")
-            st.stop()
-
-        st.dataframe(df_forecast_3, height=400, width=1000)
-        st.download_button("⬇ Download Fuel Forecast", df_forecast_3.to_csv(index=False), "forecast_fuel.csv", "text/csv")
-
-        st.markdown("---")  # Adds a horizontal line
-        st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
-
+    # Footer
+    st.markdown("---")
+    st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
 
 
 # Data Upload Portal
