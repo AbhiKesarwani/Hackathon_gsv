@@ -361,8 +361,8 @@ elif page == "Upload Data":
 
 elif page=="Query":
 
-    # Twilio credentials (Replace these with your actual credentials)
-    WILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+    # Twilio credentials 
+    TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
     TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
     TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
     YOUR_PHONE_NUMBER = os.getenv("YOUR_PHONE_NUMBER")
