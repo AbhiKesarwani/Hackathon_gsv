@@ -263,7 +263,6 @@ elif page == "Predictive Maintenance":
 
 # Demand Forecasting Portal
 elif page == "Demand Forecasting":
-    elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using *SARIMA* for fast and efficient demand prediction.")
     
