@@ -37,6 +37,9 @@ else:
     st.error("❌ Dataset not found. Please upload a valid file.")
     st.stop()
 
+
+
+
 # Define paths
 MODEL_PATH = "xgb_model.pkl"
 SCALER_PATH = "scaler.pkl"
@@ -263,7 +266,26 @@ elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using *SARIMA* for fast and efficient demand prediction.")
     
-    st.image("Demand Forecast.png", caption="🚌 Demand Forecasting")   
+    st.image("Demand Forecast.png", caption="🚌 Demand Forecasting") 
+    df_cleaned = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
+    st.dataframe(df_cleaned, height=400, width=1000)  # Enables scrolling in both directions
+    st.download_button("⬇ Download Dataset", df_cleaned.to_csv(index=False), "dataset.csv", "text/csv")
+
+# loading the results for demand forecasting
+    DATA_PATH_1 = "forecast_delay_mins.csv"
+    if os.path.exists(DATA_PATH):
+        df_forecast_1 = pd.read_csv(DATA_PATH)  # ✅ Remove "Unnamed" columns
+        if df_forecast_1.empty:
+            st.error("❌ Dataset is empty. Please upload valid data.")
+            st.stop()
+    else:
+        st.error("❌ Dataset not found. Please upload a valid file.")
+        st.stop()
+
+    st.dataframe(df_forecast_1, height=400, width=1000)  # Enables scrolling in both directions
+    st.download_button("⬇ Download Result", df_forecast_1.to_csv(index=False), "forecast_result.csv", "text/csv")
+    
 
 # Data Upload Portal
 elif page == "Upload Data":
@@ -310,3 +332,5 @@ elif page == "Upload Data":
 
         st.write("### 🔍 Updated Dataset Preview")
         st.dataframe(df)
+
+
