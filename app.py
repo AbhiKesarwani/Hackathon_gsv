@@ -96,6 +96,7 @@ warning_html = """
 
 # Home Page
 if page == "Home":
+    set_background("bg_1.jpg")
     st.title("🚌 GSRTC Data-Driven Insights Dashboard")
 
     st.markdown("## What they aksed for?")
