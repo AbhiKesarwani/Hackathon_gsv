@@ -12,66 +12,6 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 from sklearn.metrics import mean_squared_error
 from twilio.rest import Client
 
-import streamlit as st
-
-# Function to check login credentials
-def login():
-    st.image("logo.jpg", width=200)  # Add your logo at the top
-    st.markdown("<h1 style='text-align: center;'>Welcome to GSRTC Data Platform</h1>", unsafe_allow_html=True)
-
-    # Centered login form
-    with st.form("Login Form"):
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        submitted = st.form_submit_button("Login")
-
-        if submitted:
-            if username == "prophetic programmers" and password == "aids":
-                st.session_state["logged_in"] = True  # Store login state
-                st.experimental_rerun()
-            else:
-                st.error("❌ Invalid Username or Password! Please try again.")
-
-# Main dashboard
-def main_dashboard():
-    st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["Home", "Dataset", "EDA", "Predictive Maintenance", "Demand Forecasting", "Upload Data"])
-
-    if page == "Home":
-        st.title("🚌 GSRTC Data-Driven Insights Dashboard")
-        st.write("Welcome to the main dashboard!")
-        
-    elif page == "Dataset":
-        st.title("📂 Dataset Overview")
-        st.write("Dataset details will appear here.")
-        
-    elif page == "EDA":
-        st.title("📈 Exploratory Data Analysis")
-        st.write("Key insights from data.")
-
-    elif page == "Predictive Maintenance":
-        st.title("🔧 Predictive Maintenance Analysis")
-        st.write("Machine Learning models to predict breakdowns.")
-
-    elif page == "Demand Forecasting":
-        st.title("📈 Passenger Demand Forecasting")
-        st.write("Forecasting future demand trends.")
-
-    elif page == "Upload Data":
-        st.title("📤 Upload New Data")
-        uploaded_file = st.file_uploader("📁 Upload CSV File", type="csv")
-        if uploaded_file:
-            st.success("✅ File uploaded successfully!")
-
-# Check login state
-if "logged_in" not in st.session_state:
-    st.session_state["logged_in"] = False
-
-if not st.session_state["logged_in"]:
-    login()
-else:
-    main_dashboard()
-
 def set_background(image_url):
     st.markdown(
         f"""
@@ -96,8 +36,6 @@ if os.path.exists(DATA_PATH):
 else:
     st.error("❌ Dataset not found. Please upload a valid file.")
     st.stop()
-
-
 
 
 # Define paths
