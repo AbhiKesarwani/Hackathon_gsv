@@ -361,7 +361,7 @@ elif page == "Upload Data":
 elif page=="Query":
 
     # Twilio credentials (Replace these with your actual credentials)
-    TWILIO_ACCOUNT_SID = "AC879adaa8cb66b3a0f274bb60df0073c0"
+    TWILIO_ACCOUNT_SID = "AC879adaa8cb66b3a0f274bb60df0073c0" 
     TWILIO_AUTH_TOKEN = "9a155fa7de4297aeca7012d5a327248e"
     TWILIO_PHONE_NUMBER = "+13309021484"
     YOUR_PHONE_NUMBER = "+918700442643"
