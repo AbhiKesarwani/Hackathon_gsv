@@ -271,8 +271,6 @@ elif page == "Demand Forecasting":
     DATA_PATH_1 = "forecast_delay_mins.csv"
     if os.path.exists(DATA_PATH_1):
         df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ First, read the CSV
-        df_forecast_1 = df_forecast_1.loc[:, ~df_forecast_1.columns.str.contains('^Unnamed')]  # ✅ Then, filter columns
-
     if df_forecast_1.empty:
         st.error("❌ Dataset is empty. Please upload valid data.")
         st.stop()
@@ -287,7 +285,6 @@ elif page == "Demand Forecasting":
     # --- Load Seat Booking Forecast ---
     DATA_PATH_2 = "forecast_seat_book.csv"
     if os.path.exists(DATA_PATH_2):  # ✅ Fixed variable name
-        df_forecast_2 = pd.read_csv(DATA_PATH_2).loc[:, ~df_forecast_2.columns.str.contains('^Unnamed')]
         if df_forecast_2.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
             st.stop()
@@ -301,7 +298,6 @@ elif page == "Demand Forecasting":
     # --- Load Fuel Consumption Forecast ---
     DATA_PATH_3 = "forecast_consumption_fuel.csv"
     if os.path.exists(DATA_PATH_3):
-        df_forecast_3 = pd.read_csv(DATA_PATH_3).loc[:, ~df_forecast_3.columns.str.contains('^Unnamed')]
         if df_forecast_3.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
             st.stop()
