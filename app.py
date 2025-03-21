@@ -266,7 +266,21 @@ elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using *SARIMA* for fast and efficient demand prediction.")
     
-    st.image("Demand Forecast.png", caption="🚌 Demand Forecasting") 
+    st.image("Demand Forecast.png", caption="🚌 Seats Booked") 
+
+    # --- Load Seat Booking Forecast ---
+    DATA_PATH_2 = "forecast_seat_book.csv"
+    if os.path.exists(DATA_PATH_2):  # ✅ Fixed variable name
+        df_forecast_2 = pd.read_csv(DATA_PATH_2)
+        if df_forecast_2.empty:
+            st.error("❌ Dataset is empty. Please upload valid data.")
+            st.stop()
+    else:
+        st.error("❌ Dataset not found. Please upload a valid file.")
+        st.stop()
+
+    st.dataframe(df_forecast_2, height=400, width=1000)
+    st.download_button("⬇ Download Seat Forecast", df_forecast_2.to_csv(index=False), "forecast_seat.csv", "text/csv")
 
     DATA_PATH_1 = "forecast_delay_mins.csv"
     if os.path.exists(DATA_PATH_1):
@@ -282,19 +296,7 @@ elif page == "Demand Forecasting":
     st.dataframe(df_forecast_1, height=400, width=1000)
     st.download_button("⬇ Download Delay Forecast", df_forecast_1.to_csv(index=False), "forecast_delay.csv", "text/csv")
 
-    # --- Load Seat Booking Forecast ---
-    DATA_PATH_2 = "forecast_seat_book.csv"
-    if os.path.exists(DATA_PATH_2):  # ✅ Fixed variable name
-        df_forecast_2 = pd.read_csv(DATA_PATH_2)
-        if df_forecast_2.empty:
-            st.error("❌ Dataset is empty. Please upload valid data.")
-            st.stop()
-    else:
-        st.error("❌ Dataset not found. Please upload a valid file.")
-        st.stop()
-
-    st.dataframe(df_forecast_2, height=400, width=1000)
-    st.download_button("⬇ Download Seat Forecast", df_forecast_2.to_csv(index=False), "forecast_seat.csv", "text/csv")
+    
 
     # --- Load Fuel Consumption Forecast ---
     DATA_PATH_3 = "forecast_consumption_fuel.csv"
