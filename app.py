@@ -16,11 +16,9 @@ def set_background(image_url):
     st.markdown(
         f"""
         <style>
-            .st-emotion-cache-1oe5cao {{
+            .stApp {{
                 background: url({image_url}) no-repeat center center fixed;
                 background-size: cover;
-                border-radius: 10px;
-                padding: 20px;
             }}
         </style>
         """,
