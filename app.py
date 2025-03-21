@@ -208,6 +208,18 @@ elif page == "Predictive Maintenance":
         # Download Predictions
         st.download_button("⬇ Download Predictions", new_data.to_csv(index=False), "maintenance_predictions.csv", "text/csv")
 
+        # Count plot of maintenance predictions
+        fig, ax = plt.subplots(figsize=(6, 4))
+        sns.countplot(x=new_data["Predicted_Maintenance_Status"], palette=["green", "red"], ax=ax)
+        ax.set_title("🔧 Predicted Maintenance Status Distribution")
+        ax.set_xlabel("Maintenance Status (0 = Good, 1 = Needs Repair)")
+        ax.set_ylabel("Count")
+        ax.set_xticks([0, 1])
+        ax.set_xticklabels(["Good Condition", "Needs Repair"])
+
+        # Display in Streamlit
+        st.pyplot(fig)
+
 # Demand Forecasting Portal
 elif page == "Demand Forecasting":
     st.markdown(warning_html, unsafe_allow_html=True)  # Display the red warning box
