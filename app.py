@@ -24,6 +24,19 @@ else:
     st.error("❌ Dataset not found. Please upload a valid file.")
     st.stop()
 
+# Define paths
+MODEL_PATH = "xgb_model.pkl"
+
+# **Load Pretrained Model Efficiently**
+@st.cache_resource
+def load_model():
+    with open(MODEL_PATH, "rb") as f:
+        model = pickle.load(f)
+    return model
+
+# Load the model
+xgb_model = load_model()
+
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Dataset", "EDA", "Demand Forecasting", "Upload Data"])
@@ -125,6 +138,51 @@ elif page == "EDA":
     st.image("seats_booked_per_month.png", caption="📆 Seats Booked Per Month")
     st.image("total_trips_by_delay_status.png", caption="⏳ Total Trips by Delay Status")
     st.image("total_trips_by_occupancy.png", caption="🚌 Total Trips by Occupancy")
+
+
+# **Predictive Maintenance Portal**
+elif page == "Predictive Maintenance":
+    st.title("🔧 Predictive Maintenance Analysis")
+
+    uploaded_file = st.file_uploader("📁 Upload Maintenance Data (CSV)", type="csv")
+
+    if uploaded_file is not None:
+        # Load uploaded data
+        new_data = pd.read_csv(uploaded_file)
+
+        # Define features required for maintenance prediction
+        maintenance_features = [
+            "Fuel_Consumption_Liters", "Fuel_Efficiency_KMPL", "Breakdown_Incidents",
+            "Disruption_Likelihood", "Risk_Score", "Delay_Probability",
+            "Expense_Per_Trip", "Profit_Per_Trip", "Avg_Travel_Time_Mins", "Weather_Impact"
+        ]
+
+        # Check for missing columns
+        missing_cols = set(maintenance_features) - set(new_data.columns)
+        if missing_cols:
+            st.error(f"❌ Missing columns: {missing_cols}")
+            st.stop()
+
+        # Select relevant features
+        new_data = new_data[maintenance_features]
+
+        # Convert to numeric and handle missing values
+        new_data = new_data.apply(pd.to_numeric, errors="coerce")
+        new_data.fillna(new_data.median(), inplace=True)
+
+        # Standardize data
+        new_X_scaled = scaler.transform(new_data)
+
+        # Predict Maintenance Status
+        predictions = xgb_model.predict(new_X_scaled)
+        new_data["Predicted_Maintenance_Status"] = predictions
+
+        # Display Results
+        st.write("### ✅ Maintenance Predictions:")
+        st.dataframe(new_data)
+
+        # Download Predictions
+        st.download_button("⬇ Download Predictions", new_data.to_csv(index=False), "maintenance_predictions.csv", "text/csv")
 
 # Demand Forecasting Portal
 elif page == "Demand Forecasting":
