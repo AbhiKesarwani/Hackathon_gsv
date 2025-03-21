@@ -83,25 +83,25 @@ if page == "Home":
 
     st.markdown("## 🚀 Our Achievements So Far")
 
-st.markdown("""
-✅ **Unified Data Platform**  
-- We have successfully built a centralized repository that integrates all GSRTC data into one accessible platform.  
-- The platform is optimized for **seamless access across all devices**, ensuring flexibility and ease of use.  
+    st.markdown("""
+    ✅ **Unified Data Platform**  
+    - We have successfully built a centralized repository that integrates all GSRTC data into one accessible platform.  
+    - The platform is optimized for **seamless access across all devices**, ensuring flexibility and ease of use.  
 
-✅ **Exploratory Data Analysis (EDA)**  
-- Performed **in-depth data analysis** to uncover key insights from GSRTC operations.  
-- Identified trends in **fuel consumption, delays, occupancy rates, and revenue patterns** to enhance decision-making.  
+    ✅ **Exploratory Data Analysis (EDA)**  
+    - Performed **in-depth data analysis** to uncover key insights from GSRTC operations.  
+    - Identified trends in **fuel consumption, delays, occupancy rates, and revenue patterns** to enhance decision-making.  
 
-✅ **Predictive Maintenance**  
-- Developed **real-time predictive models** to proactively identify maintenance needs.  
-- Helps **reduce breakdown incidents and optimize maintenance costs**, ensuring smoother operations.  
+    ✅ **Predictive Maintenance**  
+    - Developed **real-time predictive models** to proactively identify maintenance needs.  
+    - Helps **reduce breakdown incidents and optimize maintenance costs**, ensuring smoother operations.  
 
-✅ **Demand Forecasting**  
-- Implemented **advanced forecasting models** to predict **passenger demand and resource allocation** accurately.  
-- This enables **optimized scheduling**, leading to **better service delivery and reduced operational inefficiencies**.  
+    ✅ **Demand Forecasting**  
+    - Implemented **advanced forecasting models** to predict **passenger demand and resource allocation** accurately.  
+    - This enables **optimized scheduling**, leading to **better service delivery and reduced operational inefficiencies**.  
 
-📌 *With these milestones achieved, we are now moving towards more advanced analytics, real-time anomaly detection, and geospatial route analysis!*
-""")
+    📌 *With these milestones achieved, we are now moving towards more advanced analytics, real-time anomaly detection, and geospatial route analysis!*
+    """)
 
         # Add project progress section
     st.markdown("## 📌 *Project Achievements So Far*")
