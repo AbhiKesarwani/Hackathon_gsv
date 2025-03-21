@@ -12,6 +12,21 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 from sklearn.metrics import mean_squared_error
 
 
+def set_background(image_url):
+    st.markdown(
+        f"""
+        <style>
+            .st-emotion-cache-1oe5cao {{
+                background: url({image_url}) no-repeat center center fixed;
+                background-size: cover;
+                border-radius: 10px;
+                padding: 20px;
+            }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
 # Load dataset efficiently
 DATA_PATH = "updated_data.csv"
 if os.path.exists(DATA_PATH):
