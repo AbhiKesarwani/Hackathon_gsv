@@ -161,7 +161,6 @@ if page == "Home":
 elif page == "Dataset":
     
     st.title("📂 Dataset Overview")
-    set_background("bg_1.jpg")
     st.write("""
     ### 🔍 About the Dataset
     - Synthetic Data designed to simulate real-world GSRTC operations.
