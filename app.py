@@ -30,9 +30,18 @@ MODEL_PATH = "xgb_model.pkl"
 # **Load Pretrained Model Efficiently**
 @st.cache_resource
 def load_model():
-    with open(MODEL_PATH, "rb") as f:
-        model = pickle.load(f)
-    return model
+    if not os.path.exists(MODEL_PATH):
+        st.error(f"❌ Model file not found at {MODEL_PATH}. Please upload a valid model file.")
+        st.stop()
+    
+    try:
+        with open(MODEL_PATH, "rb") as f:
+            model = pickle.load(f)
+        return model
+    except Exception as e:
+        st.error(f"⚠ Error loading model: {e}")
+        st.stop()
+
 
 # Load the model
 xgb_model = load_model()
