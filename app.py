@@ -177,28 +177,28 @@ elif page == "Predictive Maintenance":
         # Load uploaded data
         new_data = pd.read_csv(uploaded_file)
 
-        # Define features required for maintenance prediction
-        maintenance_features = [
+        # Define the expected feature order (same as when training the scaler)
+        expected_features = [
             "Fuel_Consumption_Liters", "Fuel_Efficiency_KMPL", "Breakdown_Incidents",
             "Disruption_Likelihood", "Risk_Score", "Delay_Probability",
             "Expense_Per_Trip", "Profit_Per_Trip", "Avg_Travel_Time_Mins", "Weather_Impact"
-        ]
+            ]
 
-        # Check for missing columns
-        missing_cols = set(maintenance_features) - set(new_data.columns)
+        # Ensure new_data has the expected columns in the correct order        
+        missing_cols = set(expected_features) - set(new_data.columns)
+        extra_cols = set(new_data.columns) - set(expected_features)
+
         if missing_cols:
-            st.error(f"❌ Missing columns: {missing_cols}")
+            st.error(f"❌ Missing columns in uploaded data: {missing_cols}")
             st.stop()
 
-        # Select relevant features
-        new_data = new_data[maintenance_features]
+        if extra_cols:
+            st.warning(f"⚠ Extra columns detected: {extra_cols}. They will be dropped.")
+            new_data = new_data[expected_features]  # Keep only the required columns
 
-        # Convert to numeric and handle missing values
-        new_data = new_data.apply(pd.to_numeric, errors="coerce")
-        new_data.fillna(new_data.median(), inplace=True)
-
-        # Standardize data
+        # Apply scaler
         new_X_scaled = scaler.transform(new_data)
+
 
         # Predict Maintenance Status
         predictions = xgb_model.predict(new_X_scaled)
