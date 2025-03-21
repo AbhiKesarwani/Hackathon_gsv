@@ -263,15 +263,16 @@ elif page == "Predictive Maintenance":
 
 # Demand Forecasting Portal
 elif page == "Demand Forecasting":
+    elif page == "Demand Forecasting":
     st.title("📈 Passenger Demand Forecasting")
     st.write("Using *SARIMA* for fast and efficient demand prediction.")
     
     st.image("Demand Forecast.png", caption="🚌 Demand Forecasting") 
 
-# loading the results for demand forecasting
+    # --- Load Delay Forecasting Results ---
     DATA_PATH_1 = "forecast_delay_mins.csv"
     if os.path.exists(DATA_PATH_1):
-        df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ Remove "Unnamed" columns
+        df_forecast_1 = pd.read_csv(DATA_PATH_1).loc[:, ~df_forecast_1.columns.str.contains('^Unnamed')]
         if df_forecast_1.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
             st.stop()
@@ -279,12 +280,13 @@ elif page == "Demand Forecasting":
         st.error("❌ Dataset not found. Please upload a valid file.")
         st.stop()
 
-    st.dataframe(df_forecast_1, height=400, width=1000)  # Enables scrolling in both directions
-    st.download_button("⬇ Download Result", df_forecast_1.to_csv(index=False), "forecast_result.csv", "text/csv")
+    st.dataframe(df_forecast_1, height=400, width=1000)
+    st.download_button("⬇ Download Delay Forecast", df_forecast_1.to_csv(index=False), "forecast_delay.csv", "text/csv")
 
+    # --- Load Seat Booking Forecast ---
     DATA_PATH_2 = "forecast_seat_book.csv"
-    if os.path.exists(DATA_PATH):
-        df_forecast_2 = pd.read_csv(DATA_PATH_2)  # ✅ Remove "Unnamed" columns
+    if os.path.exists(DATA_PATH_2):  # ✅ Fixed variable name
+        df_forecast_2 = pd.read_csv(DATA_PATH_2).loc[:, ~df_forecast_2.columns.str.contains('^Unnamed')]
         if df_forecast_2.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
             st.stop()
@@ -292,22 +294,22 @@ elif page == "Demand Forecasting":
         st.error("❌ Dataset not found. Please upload a valid file.")
         st.stop()
 
-    st.dataframe(df_forecast_2, height=400, width=1000)  # Enables scrolling in both directions
-    st.download_button("⬇ Download Result", df_forecast_2.to_csv(index=False), "forecast_result.csv", "text/csv")
+    st.dataframe(df_forecast_2, height=400, width=1000)
+    st.download_button("⬇ Download Seat Forecast", df_forecast_2.to_csv(index=False), "forecast_seat.csv", "text/csv")
 
+    # --- Load Fuel Consumption Forecast ---
     DATA_PATH_3 = "forecast_consumption_fuel.csv"
-
     if os.path.exists(DATA_PATH_3):
-        df_forecast_3 = pd.read_csv(DATA_PATH_3)  # ✅ Remove "Unnamed" columns
+        df_forecast_3 = pd.read_csv(DATA_PATH_3).loc[:, ~df_forecast_3.columns.str.contains('^Unnamed')]
         if df_forecast_3.empty:
             st.error("❌ Dataset is empty. Please upload valid data.")
             st.stop()
     else:
         st.error("❌ Dataset not found. Please upload a valid file.")
         st.stop()
-    
-    st.dataframe(df_forecast_3, height=400, width=1000)  # Enables scrolling in both directions
-    st.download_button("⬇ Download Result", df_forecast_3.to_csv(index=False), "forecast_result.csv", "text/csv")
+
+    st.dataframe(df_forecast_3, height=400, width=1000)
+    st.download_button("⬇ Download Fuel Forecast", df_forecast_3.to_csv(index=False), "forecast_fuel.csv", "text/csv")
 
 
 # Data Upload Portal
