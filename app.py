@@ -308,7 +308,7 @@ elif page == "Demand Forecasting":
                 st.dataframe(df_forecast, height=400, width=1000)
                 st.download_button(f"⬇ Download {data_path}", df_forecast.to_csv(index=False), f"{data_path}.csv", "text/csv")
                 # Display Forecasting Results
-                st.image(f"{im[i-1]}.jpg", caption=f"{cap[i-1}")
+                st.image(f"{im[i-1]}.jpg", caption=f"{cap[i-1]}")
             else:
                 st.error(f"❌ {data_path} not found. Please upload a valid file.")
 
