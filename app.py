@@ -81,55 +81,55 @@ warning_html = """
 if page == "Home":
     st.title("🚌 GSRTC Data-Driven Insights Dashboard")
 
-    st.markdown("## 🚀 Our Achievements So Far")
+    st.markdown("## What they aksed for?")
 
     st.markdown("""
-    ✅ **Unified Data Platform**  
-    - We have successfully built a centralized repository that integrates all GSRTC data into one accessible platform.  
+    1. **Unified Data Platform**  ✔️
+    - Centralized repository that consolidates all key operational data.
+    - Integrates all GSRTC data into one accessible platform.  
     - The platform is optimized for **seamless access across all devices**, ensuring flexibility and ease of use.  
 
-    ✅ **Exploratory Data Analysis (EDA)**  
-    - Performed **in-depth data analysis** to uncover key insights from GSRTC operations.  
+    2. **Exploratory Data Analysis (EDA)** ✔️ 
+    - Performed **in-depth data analysis** to uncover key insights from GSRTC operations. 
     - Identified trends in **fuel consumption, delays, occupancy rates, and revenue patterns** to enhance decision-making.  
 
-    ✅ **Predictive Maintenance**  
-    - Developed **real-time predictive models** to proactively identify maintenance needs.  
-    - Helps **reduce breakdown incidents and optimize maintenance costs**, ensuring smoother operations.  
+    3. **Predictive Maintenance**  ✔️
+    - Developed **real-time predictive models** to proactively identify maintenance needs. 
 
-    ✅ **Demand Forecasting**  
-    - Implemented **advanced forecasting models** to predict **passenger demand and resource allocation** accurately.  
-    - This enables **optimized scheduling**, leading to **better service delivery and reduced operational inefficiencies**.  
+    4. **Demand Forecasting**
+    
+    5. **Enhanced Decision Making**
 
     📌 *With these milestones achieved, we are now moving towards more advanced analytics, real-time anomaly detection, and geospatial route analysis!*
     """)
 
         # Add project progress section
-    st.markdown("## 📌 *Project Achievements So Far*")
+    # st.markdown("## 📌 *Project Achievements So Far*")
     
-    st.markdown("""
-    ✅ *Data Cleaning & Preprocessing*
-    - Removed duplicate and unnamed columns.
-    - Ensured uniform data format and column consistency.
-    - Filled missing values in uploaded data while maintaining integrity.
+    # st.markdown("""
+    # ✅ *Data Cleaning & Preprocessing*
+    # - Removed duplicate and unnamed columns.
+    # - Ensured uniform data format and column consistency.
+    # - Filled missing values in uploaded data while maintaining integrity.
 
-    ✅ *Exploratory Data Analysis (EDA)*
-    - *Power BI Dashboards* for visual insights 📊.
-    - Examined trends in fuel consumption, delays, and route profitability.
-    - Analyzed seasonal variations in demand and travel patterns.
+    # ✅ *Exploratory Data Analysis (EDA)*
+    # - *Power BI Dashboards* for visual insights 📊.
+    # - Examined trends in fuel consumption, delays, and route profitability.
+    # - Analyzed seasonal variations in demand and travel patterns.
 
-    ✅ *Demand Forecasting*
-    - Implemented *Exponential Smoothing* for accurate passenger predictions.
-    - Developed a forecasting model to optimize bus scheduling.
-    - Integrated *RMSE Evaluation* to ensure model accuracy.
+    # ✅ *Demand Forecasting*
+    # - Implemented *Exponential Smoothing* for accurate passenger predictions.
+    # - Developed a forecasting model to optimize bus scheduling.
+    # - Integrated *RMSE Evaluation* to ensure model accuracy.
 
-    ✅ *Dynamic Data Upload & Management*
-    - Allowed *new data uploads* while ensuring column consistency.
-    - *Handled missing columns* by filling them with null values.
-    - Prevented incorrect column mapping to avoid data corruption.
+    # ✅ *Dynamic Data Upload & Management*
+    # - Allowed *new data uploads* while ensuring column consistency.
+    # - *Handled missing columns* by filling them with null values.
+    # - Prevented incorrect column mapping to avoid data corruption.
 
-    ✅ *Downloadable Reports*
-    - Users can download *full datasets* post-processing.
-    - Ensured no data loss during downloads.
+    # ✅ *Downloadable Reports*
+    # - Users can download *full datasets* post-processing.
+    # - Ensured no data loss during downloads.
 
     🚧 *Upcoming Enhancements*:
     - *Predictive Maintenance (Under Process) 🔧*
