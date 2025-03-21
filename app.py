@@ -99,7 +99,7 @@ warning_html = """
 # Home Page
 if page == "Home":
     set_background("bg_1.jpg")
-    st.title("🚌 GSRTC Data-Driven Insights Dashboard")
+    st.title("GSRTC Data-Driven Insights Dashboard")
 
     st.markdown("What They Expected from Us")
 
@@ -113,8 +113,6 @@ if page == "Home":
     4. **Demand Forecasting** – Advanced time-series models to forecast passenger demand accurately. ✅
     
     5. **Enhanced Decision Making** -  – Actionable insights to optimize routes, fuel efficiency, and revenue. ✅
-
-    📌 *With these milestones achieved, we are now moving towards more advanced analytics, real-time anomaly detection, and geospatial route analysis!*
     """)
 
         # Add project progress section
