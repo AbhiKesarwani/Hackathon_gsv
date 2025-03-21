@@ -271,9 +271,9 @@ elif page == "Demand Forecasting":
     DATA_PATH_1 = "forecast_delay_mins.csv"
     if os.path.exists(DATA_PATH_1):
         df_forecast_1 = pd.read_csv(DATA_PATH_1)  # ✅ First, read the CSV
-    if df_forecast_1.empty:
-        st.error("❌ Dataset is empty. Please upload valid data.")
-        st.stop()
+        if df_forecast_1.empty:
+            st.error("❌ Dataset is empty. Please upload valid data.")
+            st.stop()
     else:
         st.error("❌ Dataset not found. Please upload a valid file.")
         st.stop()
