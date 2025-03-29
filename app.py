@@ -311,6 +311,13 @@ elif page == "Demand Forecasting":
             else:
                 st.error(f"❌ {data_path} not found. Please upload a valid file.")
 
+    st.markdown("""
+    <div style="background-color:#ffdddd; padding:15px; border-radius:8px; text-align:center;">
+        <h2 style="color:#d9534f;">🚧 Work in Progress 🚧</h2>
+        <p style="color:#333;">This feature is currently under development. Stay tuned for updates!</p>
+    </div>
+    """, unsafe_allow_html=True)
+
     # Footer
     st.markdown("---")
     st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
@@ -371,7 +378,7 @@ elif page=="Query":
     TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
     TWILIO_AUTH_TOKEN = os.getenv("TWILLIO_AUTH_TOKEN")
     TWILIO_PHONE_NUMBER = "+13309021484"
-    YOUR_PHONE_NUMBER = "+918700442643"
+    YOUR_PHONE_NUMBER = "+91000000000"
 
     # Function to send SMS
     def send_sms(message):
