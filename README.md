@@ -32,7 +32,7 @@ The **GSRTC Data-Driven Insights Platform** is a comprehensive tool designed to 
 
 ### 🔹 Streamlit Cloud Deployment
 The platform is hosted on **Streamlit Cloud**, and you can access it here:  
-🔗 **[GSRTC Data-Driven Insights Platform](https://gsvhackathon.streamlit.app/)**
+🔗 **[GSRTC Data-Driven Insights Platform](https://hackathon-gsv.streamlit.app/)**
 
 ## 📂 Project Structure
 ```
