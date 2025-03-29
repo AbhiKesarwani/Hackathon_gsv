@@ -314,7 +314,10 @@ elif page == "Demand Forecasting":
     st.markdown("""
     <div style="background-color:#ffdddd; padding:15px; border-radius:8px; text-align:center;">
         <h2 style="color:#d9534f;">🚧 Work in Progress 🚧</h2>
-        <p style="color:#333;">This feature is currently under development. Stay tuned for updates!</p>
+        <p style="color:#333; font-size:16px;">
+            This feature is currently under development as <b>demand forecasting model integration</b> is left.
+            You can still use this feature with the help of our code from our <a href="https://github.com/your-repository-link" target="_blank"><b>repository</b></a>.
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
