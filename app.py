@@ -389,6 +389,12 @@ elif page=="Query":
     # Streamlit UI
     st.title("User Request Portal")
 
+    st.markdown("""
+    🚧 **Work in Progress** 🚧  
+    This section is currently under development. Stay tuned for updates!  
+    In future releases, this section will allow users to ask queries related to GSRTC operations, predictive maintenance, demand forecasting, and more.
+    """)
+    
     st.write("Enter your request below, and it will be sent as an SMS.")
 
     # User input
@@ -400,11 +406,6 @@ elif page=="Query":
             st.success(response)
         else:
             st.error("Please enter a request before sending.")
-    st.markdown("""
-    🚧 **Work in Progress** 🚧  
-    This section is currently under development. Stay tuned for updates!  
-    In future releases, this section will allow users to ask queries related to GSRTC operations, predictive maintenance, demand forecasting, and more.
-    """)
             
     st.markdown("---")  # Adds a horizontal line
     st.markdown("<h5 style='text-align: center;'>Made with ❤️ by Prophetic Programmers</h5>", unsafe_allow_html=True)
