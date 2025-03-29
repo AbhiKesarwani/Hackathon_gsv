@@ -316,7 +316,7 @@ elif page == "Demand Forecasting":
         <h2 style="color:#d9534f;">🚧 Work in Progress 🚧</h2>
         <p style="color:#333; font-size:16px;">
             This feature is currently under development as <b>demand forecasting model integration</b> is left.
-            You can still use this feature with the help of our code from our <a href="https://github.com/your-repository-link" target="_blank"><b>repository</b></a>.
+            You can still use this feature with the help of our code from our <a href="https://github.com/AbhiKesarwani/Hackathon_gsv" target="_blank"><b>repository</b></a>.
         </p>
     </div>
     """, unsafe_allow_html=True)
