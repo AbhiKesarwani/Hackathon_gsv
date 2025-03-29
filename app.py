@@ -390,10 +390,11 @@ elif page=="Query":
     st.title("User Request Portal")
 
     st.markdown("""
-    🚧 **Work in Progress** 🚧  
-    This section is currently under development. Stay tuned for updates!  
-    In future releases, this section will allow users to ask queries related to GSRTC operations, predictive maintenance, demand forecasting, and more.
-    """)
+    <div style="background-color:#ffdddd; padding:15px; border-radius:8px; text-align:center;">
+        <h2 style="color:#d9534f;">🚧 Work in Progress 🚧</h2>
+        <p style="color:#333;">This feature is currently under development. Stay tuned for updates!</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.write("Enter your request below, and it will be sent as an SMS.")
 
